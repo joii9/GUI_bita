@@ -33,11 +33,11 @@ class GUI:
          add_event.pack()
         
     #Aquí se define la función de caja de entrada
-    def entry_box(self, frame, fila, columna):
+    def entry_box(self, frame, fila, columna, padx):
         my_entry= Entry(frame) #Aqui Roberto cambio el self.win por frame
         #my_entry.insert(0, "tu mamá 🍕")
         #my_entry.pack()
-        my_entry.grid(row=fila, column=columna)
+        my_entry.grid(row=fila, column=columna, padx=padx)
 
     def show(self):
         self.win.mainloop()
@@ -60,10 +60,10 @@ class MainWindow(GUI):
         # my_entry= Entry(frame)
         # my_entry.insert(0, "tu mamá 🍕")
         # my_entry.grid(row=0, column=1, padx = 10, pady = 10)
-        my_entry = self.entry_box(frame, 0, 1) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
+        my_entry = self.entry_box(frame, 0, 1, 5) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
         
         add_event= Button(frame, text= "Buscar")
-        add_event.grid(row= 0, column= 2, padx = 10, pady = 10)
+        add_event.grid(row= 0, column= 2, padx = 5, pady = 10)
         #self.button(frame,"Hola,", 0,2)
                         
     def table(self): #Aquí podria faltar win. 
@@ -125,16 +125,44 @@ class EventWindow(GUI):
         today=date.today()
         dateformat=today.strftime("%Y%m%d")
         return str(dateformat)
+    
+    def logging (self):
+        self.logging_frame= tk.Frame(self.win, padx=10, pady=10, bg="#D49FFF") ##D49FFF
+        self.logging_frame.pack(side="top", expand=True, fill="both")
+
+        label= tk.Label(self.logging_frame, text="Fecha-ID:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") ##F2F2F2
+        label.grid(row= 0, column= 0)
+
+        label_date= tk.Label(self.logging_frame, text=EventWindow.dateid(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
+        label_date.grid(row=0, column=1)
+        #event_window.text(event_window.dateid(), 0,1)
+
+        label_user = tk.Label(self.logging_frame, text="Usuario:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
+        label_user.grid(row=0, column=2)
+
+        user_Entry = tk.Entry(self.logging_frame) #Esta opción la cambiaré por un desplegable con los usuarios dados de alta y un invitado
+        user_Entry.grid(row=0, column=3)
+
+        label_password = tk.Label(self.logging_frame, text="Contraseña", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
+        label_password.grid(row=0, column=4)
+
+        password_Entry = tk.Entry(self.logging_frame)
+        password_Entry.grid(row= 0, column= 5)
+
+    def event(self):
+        
+
 
 def e_window():
     event_window = EventWindow()
-    event_window.text("Fecha-ID: ", 0,0)
-    event_window.text(event_window.dateid(), 0,1)
-    event_window.text("Usuario: ", 0, 2)
-    event_window.entry_box(0,3)
-    event_window.text("Contraseña: ", 0,4)
-    event_window.entry_box(0, 5)
-    event_window.show()
+    event_window.logging()
+    #event_window.text("Fecha-ID: ", 0,0)
+    #event_window.text(event_window.dateid(), 0,1)
+    #event_window.text("Usuario: ", 0, 2)
+    #event_window.entry_box(0,3)
+    #event_window.text("Contraseña: ", 0,4)
+    #event_window.entry_box(0, 5)
+    #event_window.show()
 
 main_window = MainWindow()
 #main_window.frame()
