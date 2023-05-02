@@ -35,9 +35,9 @@ class EventWindow(GUI):
         label_date.grid(row=0, column=1)
         #event_window.text(event_window.dateid(), 0,1)
 
-        user= StringVar(self.logging_frame)
-        user.set("Usuario")
-        pullDown_menuUser = OptionMenu(self.logging_frame, user, "JAGM", "JCM", "Guest")
+        self.user= StringVar(self.logging_frame)
+        self.user.set("Usuario")
+        pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "JAGM", "JCM", "Guest")
         pullDown_menuUser.grid(row=0, column= 2, padx=60)
 
         #label_user = tk.Label(self.logging_frame, text="Usuario:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
@@ -60,23 +60,25 @@ class EventWindow(GUI):
         self.event_text.pack(expand=True, fill="both", padx= 5, pady=5)
 
     def get_input(self):
+        user= self.user.get()
+        print(user)
+
         input_event= self.event_text.get("1.0","end-1c")
         print(input_event)
 
-        x=self.mx2w.get()
-        print(x)
-
-        y=str(x)
-        print(y)
+        mx2w=self.mx2w.get()
+        mx3w=self.mx3w.get()
+        print(mx2w)
+        print(mx3w)
 
         input_solution= self.solution_text.get("1.0","end-1c")
+        print(input_solution)
                   
         connection = sqlite3.connect("C:/Users/Joel/Escritorio/test_db/IT_database.db")
         cursor = connection.cursor()
-        cursor.execute('insert into events(EVENT, SOLUTION) values ("'+input_event+'","'+input_solution+'")')
-        connection.commit()
-        print('insert into EVENTS (EVENT, SOLUTION) values ("'+input_event+'","'+input_solution+'")')
-            #cursor.execute('insert into events(EVENT, SOLUTION) values ("'+input_event+'","'+input_solution+'");')    
+        cursor.execute('insert into events(USERID, EVENT, SOLUTION) values ("'+user+'","'+input_event+'","'+input_solution+'")')
+        connection.commit() #descomentar esto para que surjan efecto mi el .execute de arrba
+        #print('insert into EVENTS (USERID, EVENT, SOLUTION) values ("'+user+'","'+input_event+'","'+input_solution+'")')
 
 
     def checkbox(self):
@@ -98,7 +100,8 @@ class EventWindow(GUI):
         checkbutton_mx2w.grid(row=2, column=0)
         label_weekly= tk.Label(self.checkbox_frame, text="SEMANAL", bg="#D49FFF",fg="#4D4D4D") #font=("Helvetica", 15)
         label_weekly.grid(row=2, column=1)
-        checkbutton_mx3w = tk.Checkbutton(self.checkbox_frame, bg="#D49FFF")
+        self.mx3w=IntVar(self.checkbox_frame)
+        checkbutton_mx3w = tk.Checkbutton(self.checkbox_frame, bg="#D49FFF", variable=self.mx3w)
         checkbutton_mx3w.grid(row=2, column=2)
 
         checkbutton_mx2s = tk.Checkbutton(self.checkbox_frame, bg="#D49FFF")

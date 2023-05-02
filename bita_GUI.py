@@ -84,22 +84,6 @@ class MainWindow(GUI):
 
 
 
-
-# def e_window():
-#     event_window = EventWindow()
-#     event_window.logging()
-#     event_window.event()
-#     #event_window.get_input()
-#     event_window.checkbox()
-#     event_window.solution()
-#     #event_window.text("Fecha-ID: ", 0,0)
-#     #event_window.text(event_window.dateid(), 0,1)
-#     #event_window.text("Usuario: ", 0, 2)
-#     #event_window.entry_box(0,3)
-#     #event_window.text("Contraseña: ", 0,4)
-#     #event_window.entry_box(0, 5)
-#     #event_window.show()
-
 main_window = MainWindow()
 #main_window.frame()
 main_window.busqueda()
