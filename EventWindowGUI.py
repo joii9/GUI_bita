@@ -23,6 +23,17 @@ class EventWindow(GUI):
         today=date.today()
         dateformat=today.strftime("%Y%m%d")
         return str(dateformat)
+
+    def check_dateid (self):
+        connection = sqlite3.connect("C:/Users/Joel/Escritorio/test_db/IT_database.db")
+        cursor = connection.cursor()
+        last=cursor.execute("SELECT dateid FROM events WHERE dateid>=2023032701")
+        #print(dir(last))
+        z=last.fetchone()
+        
+        #print(int(z))
+
+        return
     
     def logging (self):
         self.logging_frame= tk.Frame(self.win, padx=10, pady=10, bg="#D49FFF")
@@ -77,7 +88,7 @@ class EventWindow(GUI):
         connection = sqlite3.connect("C:/Users/Joel/Escritorio/test_db/IT_database.db")
         cursor = connection.cursor()
         cursor.execute('insert into events(USERID, EVENT, SOLUTION) values ("'+user+'","'+input_event+'","'+input_solution+'")')
-        connection.commit() #descomentar esto para que surjan efecto mi el .execute de arrba
+        #connection.commit() #descomentar esto para que surjan efecto mi el .execute de arrba
         #print('insert into EVENTS (USERID, EVENT, SOLUTION) values ("'+user+'","'+input_event+'","'+input_solution+'")')
 
 
@@ -149,3 +160,13 @@ class EventWindow(GUI):
         solution_frame.pack(side="top", expand=True, fill="both", padx = 10, pady = 10) #anchor= E
         self.solution_text = tk.Text(solution_frame)
         self.solution_text.pack(expand=True, fill="both", padx= 5, pady=5)
+
+
+#event_window = EventWindow()
+#event_window.logging()
+#event_window.check_dateid()
+#event_window.event()
+#event_window.get_input()
+#event_window.checkbox()
+#event_window.solution()
+#event_window.show()

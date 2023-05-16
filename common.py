@@ -24,9 +24,9 @@ class GUI:
 
     #Aquí se define la funcion del boton
     def button(self, texto, fila, columna):
-         add_event= tk.Button(text=texto, command= e_window)
-         #add_event.grid(row= fila, column= columna)
-         add_event.pack()
+        add_event= tk.Button(text=texto, command= e_window)
+        #add_event.grid(row= fila, column= columna)
+        add_event.pack()
         
     #Aquí se define la función de caja de entrada
     def entry_box(self, frame, fila, columna, padx):
@@ -45,6 +45,7 @@ def e_window():
     from EventWindowGUI import EventWindow
     event_window = EventWindow()
     event_window.logging()
+    event_window.check_dateid()
     event_window.event()
     #event_window.get_input()
     event_window.checkbox()
