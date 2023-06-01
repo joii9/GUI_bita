@@ -15,25 +15,37 @@ class EventWindow(GUI):
     def __init__(self):
         title = "Eventos"
         configure = "#D49FFF"
-        geometry = "650x600"
+        geometry = "675x600"
         super().__init__(title, configure, geometry)
         
 
-    def dateid (self):
-        today=date.today()
+    def dateID(self): 
+        today=date.today() #Esto es para colocar la fecha en el formato correcto añomesdia.
         dateformat=today.strftime("%Y%m%d")
-        return str(dateformat)
+        print(dateformat) #dateformat es un string
 
-    def check_dateid (self):
-        connection = sqlite3.connect("C:/Users/Joel/Escritorio/test_db/IT_database.db")
+        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db") #Comprobar que no haya entrada con la fecha 
         cursor = connection.cursor()
-        last=cursor.execute("SELECT dateid FROM events WHERE dateid>=2023032701")
-        #print(dir(last))
-        z=last.fetchone()
-        
-        #print(int(z))
+        x =cursor.execute("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
+        check=x.fetchall()
+        print(check)
+        print("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
 
-        return
+        if str(check) == "[]": #getID esto es para añadir dos digitos despues de la fecha añomesdia+00 inicializado en 1
+            print("Dentro del if")
+            #print(int(dateformat))
+            dateid= int(dateformat)*100+1
+            print(dateid)
+            dateid_str=str(dateid)
+            return dateid_str
+        else:
+            print("Dentro del else")
+            check= int(str(check[-1])[1:-2])
+            print(check)
+            dateid=str(check+1)
+            print(dateid)
+            return dateid
+            
     
     def logging (self):
         self.logging_frame= tk.Frame(self.win, padx=10, pady=10, bg="#D49FFF")
@@ -42,7 +54,7 @@ class EventWindow(GUI):
         label= tk.Label(self.logging_frame, text="Fecha-ID:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") ##F2F2F2
         label.grid(row= 0, column= 0)
 
-        label_date= tk.Label(self.logging_frame, text=EventWindow.dateid(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
+        label_date= tk.Label(self.logging_frame, text= EventWindow.dateID(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") #EventWindow.getID()
         label_date.grid(row=0, column=1)
         #event_window.text(event_window.dateid(), 0,1)
 
@@ -84,12 +96,14 @@ class EventWindow(GUI):
 
         input_solution= self.solution_text.get("1.0","end-1c")
         print(input_solution)
+
                   
-        connection = sqlite3.connect("C:/Users/Joel/Escritorio/test_db/IT_database.db")
+        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
         cursor = connection.cursor()
-        cursor.execute('insert into events(USERID, EVENT, SOLUTION) values ("'+user+'","'+input_event+'","'+input_solution+'")')
-        #connection.commit() #descomentar esto para que surjan efecto mi el .execute de arrba
-        #print('insert into EVENTS (USERID, EVENT, SOLUTION) values ("'+user+'","'+input_event+'","'+input_solution+'")')
+        print('insert into EVENTS (DATEID, USERID, EVENT, SOLUTION) values ('+self.dateID()+',"'+user+'","'+input_event+'","'+input_solution+'")')
+        cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, SOLUTION) values ("'+self.dateID()+'","'+user+'","'+input_event+'","'+input_solution+'")')
+        connection.commit() #descomentar esto para que surjan efecto mi el .execute de arrba
+        #print('insert into EVENTS (DATEID, USERID, EVENT, SOLUTION) values ('+self.dateID()+',"'+user+'","'+input_event+'","'+input_solution+'")')
 
 
     def checkbox(self):
@@ -162,11 +176,13 @@ class EventWindow(GUI):
         self.solution_text.pack(expand=True, fill="both", padx= 5, pady=5)
 
 
-#event_window = EventWindow()
-#event_window.logging()
+event_window = EventWindow()
+#event_window.dateID()
+event_window.logging()
 #event_window.check_dateid()
-#event_window.event()
+#event_window.getID(event_window.check_dateid())
+event_window.event()
 #event_window.get_input()
-#event_window.checkbox()
-#event_window.solution()
-#event_window.show()
+event_window.checkbox()
+event_window.solution()
+event_window.show()

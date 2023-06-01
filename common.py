@@ -41,13 +41,12 @@ class GUI:
 
 def e_window():
     
-    
     from EventWindowGUI import EventWindow
-    event_window = EventWindow()
-    event_window.logging()
-    event_window.check_dateid()
-    event_window.event()
+    #event_window = EventWindow()
+    #event_window.logging()
+    #event_window.check_dateid()
+    #event_window.event()
     #event_window.get_input()
-    event_window.checkbox()
-    event_window.solution()
+    #event_window.checkbox()
+    #event_window.solution()
     #event_window.show()

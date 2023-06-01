@@ -17,7 +17,7 @@ class MainWindow(GUI):
 
         title = "BITACORA DE SISTEMAS"
         configure = "#D49FFF"
-        geometry = "1250x300"
+        geometry = "1250x600" #Originalmente tenia un valor de x300 pero para poder visualizar 10 entradas en la db lo modifiqué a x600
         super().__init__(title, configure, geometry) #Ejemplo de HERENCIA
 
     def busqueda(self):
@@ -36,7 +36,7 @@ class MainWindow(GUI):
                         
     def table(self): #Aquí podria faltar win. 
         columns = ("DATEID", "USERID", "EVENT", "SOLUTION")
-        my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) # Aquí podria ser self.win
+        my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 10) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
 
         my_tree.column("DATEID", anchor= CENTER, width=100)
         my_tree.column("USERID", anchor= CENTER, width=100) 
@@ -51,7 +51,7 @@ class MainWindow(GUI):
         #my_tree.grid(row=2, column=2)
 
         #Connection with our data base
-        connection = sqlite3.connect("C:/Users/Joel/Escritorio/test_db/IT_database.db")
+        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
 
         #Creating a cursor
         cursor = connection.cursor()
