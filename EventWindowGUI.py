@@ -13,29 +13,30 @@ from common import GUI
 class EventWindow(GUI):
     
     def __init__(self):
+        
+        #self.my_child_window=Toplevel(self.main)
         title = "Eventos"
         configure = "#D49FFF"
         geometry = "675x600"
         super().__init__(title, configure, geometry)
-        
 
-    def dateID(self): 
+    def generator_dateID(self): 
         today=date.today() #Esto es para colocar la fecha en el formato correcto añomesdia.
         dateformat=today.strftime("%Y%m%d")
-        print(dateformat) #dateformat es un string
+        #print(dateformat) #dateformat es un string
 
         connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db") #Comprobar que no haya entrada con la fecha 
         cursor = connection.cursor()
         x =cursor.execute("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
         check=x.fetchall()
-        print(check)
-        print("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
+        #print(check)
+        #print("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
 
         if str(check) == "[]": #getID esto es para añadir dos digitos despues de la fecha añomesdia+00 inicializado en 1
-            print("Dentro del if")
+            #print("Dentro del if")
             #print(int(dateformat))
             dateid= int(dateformat)*100+1
-            print(dateid)
+            #print(dateid)
             dateid_str=str(dateid)
             return dateid_str
         else:
@@ -45,16 +46,15 @@ class EventWindow(GUI):
             dateid=str(check+1)
             print(dateid)
             return dateid
-            
     
-    def logging (self):
+    def logging_section (self):
         self.logging_frame= tk.Frame(self.win, padx=10, pady=10, bg="#D49FFF")
         self.logging_frame.pack(side="top", fill="both") #expand=True,
 
         label= tk.Label(self.logging_frame, text="Fecha-ID:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") ##F2F2F2
         label.grid(row= 0, column= 0)
 
-        label_date= tk.Label(self.logging_frame, text= EventWindow.dateID(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") #EventWindow.getID()
+        label_date= tk.Label(self.logging_frame, text= EventWindow.generator_dateID(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") #EventWindow.getID()
         label_date.grid(row=0, column=1)
         #event_window.text(event_window.dateid(), 0,1)
 
@@ -63,19 +63,13 @@ class EventWindow(GUI):
         pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "JAGM", "JCM", "Guest")
         pullDown_menuUser.grid(row=0, column= 2, padx=60)
 
-        #label_user = tk.Label(self.logging_frame, text="Usuario:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
-        #label_user.grid(row=0, column=2)
-
-        #user_Entry = tk.Entry(self.logging_frame) #Esta opción la cambiaré por un desplegable con los usuarios dados de alta y un invitado
-        #user_Entry.grid(row=0, column=3)
-
         label_password = tk.Label(self.logging_frame, text="Contraseña", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
         label_password.grid(row=0, column=3)
 
         password_Entry = tk.Entry(self.logging_frame)
         password_Entry.grid(row= 0, column= 4)
-
-    def event(self):
+    
+    def event_section(self):
         
         event_frame=LabelFrame(self.win, text="EVENTO", bg="#D49FFF")
         event_frame.pack(side="top", expand=True, fill="both", padx = 10, pady = 10) #anchor= E
@@ -83,6 +77,7 @@ class EventWindow(GUI):
         self.event_text.pack(expand=True, fill="both", padx= 5, pady=5)
 
     def get_input(self):
+
         user= self.user.get()
         print(user)
 
@@ -100,13 +95,14 @@ class EventWindow(GUI):
                   
         connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
         cursor = connection.cursor()
-        print('insert into EVENTS (DATEID, USERID, EVENT, SOLUTION) values ('+self.dateID()+',"'+user+'","'+input_event+'","'+input_solution+'")')
-        cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, SOLUTION) values ("'+self.dateID()+'","'+user+'","'+input_event+'","'+input_solution+'")')
+        print('insert into EVENTS (DATEID, USERID, EVENT, SOLUTION) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'","'+input_solution+'")')
+        cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, SOLUTION) values ("'+self.generator_dateID()+'","'+user+'","'+input_event+'","'+input_solution+'")')
         connection.commit() #descomentar esto para que surjan efecto mi el .execute de arrba
         #print('insert into EVENTS (DATEID, USERID, EVENT, SOLUTION) values ('+self.dateID()+',"'+user+'","'+input_event+'","'+input_solution+'")')
-
-
-    def checkbox(self):
+        #self.parent=update_table()
+        self.win.destroy()
+    
+    def checkbox_section(self):
 
         self.checkbox_frame= tk.Frame(self.win, padx=10, pady=10, bg="#D49FFF")
         self.checkbox_frame.pack(side="top") #expand=True, fill="both"
@@ -167,22 +163,17 @@ class EventWindow(GUI):
 
         getInto_event= tk.Button(self.checkbox_frame, text="Ingresar", command= self.get_input)
         getInto_event.grid(row= 8, column= 1, pady=20)
-
-
-    def solution(self):
+    
+    
+    def solution_section(self):
         solution_frame = LabelFrame(self.win, text="SOLUCION", bg="#D49FFF")
         solution_frame.pack(side="top", expand=True, fill="both", padx = 10, pady = 10) #anchor= E
         self.solution_text = tk.Text(solution_frame)
         self.solution_text.pack(expand=True, fill="both", padx= 5, pady=5)
 
-
-event_window = EventWindow()
-#event_window.dateID()
-event_window.logging()
-#event_window.check_dateid()
-#event_window.getID(event_window.check_dateid())
-event_window.event()
-#event_window.get_input()
-event_window.checkbox()
-event_window.solution()
-event_window.show()
+#event_window = EventWindow()
+#event_window.logging_section()
+#event_window.event_section()
+#event_window.checkbox_section()
+#event_window.solution_section()
+#event_window.show()
