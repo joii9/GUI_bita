@@ -5,17 +5,19 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
-from common import GUI
+#from common import GUI
+from EventWindowGUI import EventWindow
 
 
-class MainWindow(GUI):
+class MainWindow():
 
     def __init__(self):
 
-        title = "BITACORA DE SISTEMAS"
-        configure = "#D49FFF"
-        geometry = "1250x600" #Originalmente tenia un valor de x300 pero para poder visualizar 10 entradas en la db lo modifiqué a x600
-        super().__init__(title, configure, geometry) #Ejemplo de HERENCIA
+        self.win= tkinter.Tk()
+        self.win.title("BITACORA DE SISTEMAS")
+        self.win.configure(bg="#D49FFF")
+        self.win.geometry("1250x600")
+        
     
     def bar_menu(self):
 
@@ -81,18 +83,9 @@ class MainWindow(GUI):
         connection.close()
     
     def create_button(self, texto):
-        add_event=tk.Button(text=texto, command= create_event_window)
+        add_event=tk.Button(text=texto, command= lambda:EventWindow(self.win))
         add_event.pack()
+    
+    def show(self):
+        self.win.mainloop()
 
-
-def create_event_window():
-
-    from EventWindowGUI import EventWindow
-    from bita import MainWindow
-
-    event_window = EventWindow()
-    event_window.logging_section()
-    event_window.event_section()
-    event_window.checkbox_section()
-    event_window.solution_section()
-    event_window.show()
