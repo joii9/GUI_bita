@@ -7,12 +7,13 @@ from tkinter import *
 from tkinter import ttk
 from datetime import date
 
-
+#from bita import update_table
 
 class EventWindow():
     
-    def __init__(self,win):
-        self.win=win
+    def __init__(self,obj): #Creamos un constructor que recibe objeto, ya que estamos declarando el main_window en toplevel
+        self.win=obj.win #A la variable self.win recibe del objeto solo win
+        self.obj=obj #self.obj recibe el objeto entero, en esta linea recibe el objeto main_window con todas las funciones miembro
         self.event_window=Toplevel(self.win)
         self.event_window.title("Eventos")
         self.event_window.configure(bg="#D49FFF")
@@ -103,7 +104,10 @@ class EventWindow():
         connection.commit() #descomentar esto para que surjan efecto mi el .execute de arrba
         #print('insert into EVENTS (DATEID, USERID, EVENT, SOLUTION) values ('+self.dateID()+',"'+user+'","'+input_event+'","'+input_solution+'")')
         #self.parent=update_table()
-        self.event_window.destroy()
+        #self.win=win
+        self.event_window.destroy() #Aquí destruimos event_window
+        self.win.deiconify() #Aparecemos al padre, self.win
+        self.obj.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
     
     def checkbox_section(self):
 
@@ -166,6 +170,7 @@ class EventWindow():
 
         getInto_event= tk.Button(self.event_window.checkbox_frame, text="Ingresar", command= self.get_input)
         getInto_event.grid(row= 8, column= 1, pady=20)
+        print(dir(self))
     
     
     def solution_section(self):
@@ -173,6 +178,7 @@ class EventWindow():
         solution_frame.pack(side="top", expand=True, fill="both", padx = 10, pady = 10) #anchor= E
         self.solution_text = tk.Text(solution_frame)
         self.solution_text.pack(expand=True, fill="both", padx= 5, pady=5)
+
 
 
 

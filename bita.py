@@ -51,8 +51,14 @@ class MainWindow():
         label.pack()
 
     def create_table(self): #Aquí podria faltar win. 
+        try:
+            self.my_tree.destroy() #Destruye el treeview si existe
+            self.add_event.destroy() #Destruye el boton add_event si existe
+        except:
+            print("ah ah ahhhh") #En la primer corrida, como my_tree ni add_event existen en la consola se observa la impresion
+
         columns = ("DATEID", "USERID", "EVENT", "SOLUTION")
-        self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 10) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
+        self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 20) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
 
         self.my_tree.column("DATEID", anchor= CENTER, width=100)
         self.my_tree.column("USERID", anchor= CENTER, width=100) 
@@ -65,8 +71,6 @@ class MainWindow():
         self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
-    def update_table(self):
-        #Connection with our data base
         connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
 
         #Creating a cursor
@@ -75,16 +79,17 @@ class MainWindow():
         #Visualize data
         cursor.execute("Select * from EVENTS")
 
-        #Ordenar por pila y no por fila!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         rows= cursor.fetchall()
         print(rows)
+       
         for row in rows:
-            self.my_tree.insert("", tk.END, values = row)
+            self.my_tree.insert("", 0, values = row)
         connection.close()
+
+        self.add_event=tk.Button(text="Añadir Evento", command= lambda:EventWindow(self)) #Antes self.win pero de esta forma solo pasaba la ventana a EventWindow. La forma correcta es solo self para pasar el objeto completo.
+        self.add_event.pack()
     
-    def create_button(self, texto):
-        add_event=tk.Button(text=texto, command= lambda:EventWindow(self.win))
-        add_event.pack()
+        
     
     def show(self):
         self.win.mainloop()
