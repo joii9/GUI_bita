@@ -16,7 +16,7 @@ class MainWindow():
         self.win= tkinter.Tk()
         self.win.title("BITACORA DE SISTEMAS")
         self.win.configure(bg="#D49FFF")
-        self.win.geometry("1250x600")
+        self.win.geometry("1100x300")
         
     
     def bar_menu(self):
@@ -57,18 +57,18 @@ class MainWindow():
         except:
             print("ah ah ahhhh") #En la primer corrida, como my_tree ni add_event existen en la consola se observa la impresion
 
-        columns = ("DATEID", "USERID", "EVENT", "SOLUTION")
-        self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 20) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
+        columns = ("DATEID", "USERID", "EVENT")
+        self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
 
         self.my_tree.column("DATEID", anchor= CENTER, width=100)
         self.my_tree.column("USERID", anchor= CENTER, width=100) 
-        self.my_tree.column("EVENT", anchor= W, width= 300)
-        self.my_tree.column("SOLUTION", anchor= W, width=600)
+        self.my_tree.column("EVENT", anchor= W, width= 800)
+        #self.my_tree.column("SOLUTION", anchor= W, width=600)
 
         self.my_tree.heading("DATEID", text="FECHA-ID", anchor=CENTER)
         self.my_tree.heading("USERID", text="USUARIO", anchor=CENTER)
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)     
-        self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
+        #self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
         connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
