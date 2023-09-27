@@ -14,7 +14,7 @@ class MainWindow():
     def __init__(self):
 
         self.win= tkinter.Tk()
-        self.win.title("BITACORA DE SISTEMAS")
+        self.win.title("BITACORA DE SISTEMAS                                                                                                                                                                                                     Developed by Ing. Joel Carbajal Muñoz")
         self.win.configure(bg="#D49FFF")
         self.win.geometry("1100x300")
         
@@ -86,6 +86,8 @@ class MainWindow():
             self.my_tree.insert("", 0, values = row)
         connection.close()
 
+        #self.my_tree.bind("<Double-1>", self.click)
+
         self.add_event=tk.Button(text="Añadir Evento", command= lambda:EventWindow(self)) #Antes self.win pero de esta forma solo pasaba la ventana a EventWindow. La forma correcta es solo self para pasar el objeto completo.
         self.add_event.pack()
     
@@ -94,3 +96,6 @@ class MainWindow():
     def show(self):
         self.win.mainloop()
 
+
+    def click(self):
+        pass
