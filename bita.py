@@ -7,6 +7,7 @@ from tkinter import ttk
 
 #from common import GUI
 from EventWindowGUI import EventWindow
+from TraceWindowGUI import traceWindow
 
 
 class MainWindow():
@@ -71,7 +72,7 @@ class MainWindow():
         #self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
+        connection = sqlite3.connect("C:/Users/SOC/Desktop/test_db/IT_database.db")
 
         #Creating a cursor
         cursor = connection.cursor()
@@ -85,17 +86,17 @@ class MainWindow():
         for row in rows:
             self.my_tree.insert("", 0, values = row)
         connection.close()
-
-        #self.my_tree.bind("<Double-1>", self.click)
-
+        self.sel=self.my_tree.focus()
+        self.my_tree.bind("<Double-1>", self.click)#acuerdate que con () la funcion se ejecuta a la de a webo
+        #print(self.my_tree.focus())
         self.add_event=tk.Button(text="Añadir Evento", command= lambda:EventWindow(self)) #Antes self.win pero de esta forma solo pasaba la ventana a EventWindow. La forma correcta es solo self para pasar el objeto completo.
         self.add_event.pack()
+
+    def click(self, e):
+        self.sel=self.my_tree.focus()
+        aux=traceWindow(self.my_tree.item(self.sel,"values")[0])
     
-        
     
     def show(self):
         self.win.mainloop()
-
-
-    def click(self):
-        pass
+    

@@ -29,7 +29,7 @@ class EventWindow():
         dateformat=today.strftime("%Y%m%d")
         #print(dateformat) #dateformat es un string
 
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db") #Comprobar que no haya entrada con la fecha 
+        connection = sqlite3.connect("C:/Users/SOC/Desktop/test_db/IT_database.db") #Comprobar que no haya entrada con la fecha 
         cursor = connection.cursor()
         x =cursor.execute("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
         check=x.fetchall()
@@ -112,19 +112,19 @@ class EventWindow():
 
         
         if mx2 == 1 and mx3==0:
-            connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
+            connection = sqlite3.connect("C:/Users/SOC/Desktop/test_db/IT_database.db")
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'")')
             cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+self.generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
             connection.commit()
         elif mx2 == 0 and mx3 == 1:
-            connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
+            connection = sqlite3.connect("C:/Users/SOC/Desktop/test_db/IT_database.db")
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'")')
             cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3, TICKETMX3) values ('+self.generator_dateID()+',1,1,1,1,1,1)')
             connection.commit()
         else:
-            connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
+            connection = sqlite3.connect("C:/Users/SOC/Desktop/test_db/IT_database.db")
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'")')
             connection.commit()
