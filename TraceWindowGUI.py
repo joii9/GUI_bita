@@ -7,12 +7,19 @@ from tkinter import ttk
 
 class traceWindow():
     
-    def __init__(self,sel):
+    def __init__(self, selection):
         self.win= tkinter.Tk()
-        self.win.title("BITACORA DE SISTEMAS                                                                                                                                                                                                     Developed by Ing. Joel Carbajal Muñoz")
+        self.win.title("SEGUIMIENTO")
         self.win.configure(bg="#D49FFF")
-        self.win.geometry("1100x300")
-        print(sel)
+        self.win.geometry("500x500")
+        self.put_label(selection)
+        print(selection)
         self.win.mainloop()
+    
+    def put_label(self, selection):
+        label= tk.Label(self.win, text=selection, font=("Helvetica", 15), fg="#4D4D4D")
+        label.configure(bg="#D49FFF")
+        label.pack()
+
 
 #traceWindow=traceWindow()
