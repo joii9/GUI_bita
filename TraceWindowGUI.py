@@ -13,7 +13,7 @@ class traceWindow():
         self.win.configure(bg="#D49FFF")
         self.win.geometry("500x500")
         self.put_label(selection)
-        print(selection)
+        #print(selection)
         self.win.mainloop()
     
     def put_label(self, selection):
