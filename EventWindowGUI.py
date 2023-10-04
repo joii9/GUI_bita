@@ -17,7 +17,7 @@ class EventWindow():
         self.event_window=Toplevel(self.win)
         self.event_window.title("Eventos")
         self.event_window.configure(bg="#D49FFF")
-        self.event_window.geometry("675x400")
+        self.event_window.geometry("675x500")
         self.logging_section()
         self.event_section()
         self.checkbox_section()
@@ -189,9 +189,11 @@ class EventWindow():
         self.attention_inc=IntVar(self.event_window.checkbox_frame)
         checkbutton_attention_inc = tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF", variable=self.attention_inc)
         checkbutton_attention_inc.grid(row=4, column=4)
-
-        #ticket=tk.Entry(self.event_window.checkbox_frame)
         
+        label_ticket= tk.Label(self.event_window.checkbox_frame, text="#-TICKET", bg="#D49FFF",fg="#4D4D4D")
+        label_ticket.grid(row=5, column=2, pady=10)
+        ticket=tk.Entry(self.event_window.checkbox_frame)
+        ticket.grid(row=6 , column=2)
 
         getInto_event= tk.Button(self.event_window.checkbox_frame, text="Ingresar", command= self.get_input)
         getInto_event.grid(row= 13, column= 2, pady=20)
