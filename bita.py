@@ -15,7 +15,7 @@ class MainWindow():
     def __init__(self):
 
         self.win= tkinter.Tk()
-        self.win.title("BITACORA DE SISTEMAS                                                                                                                                                                                                     Developed by Ing. Joel Carbajal Muñoz")
+        self.win.title("BITACORA DE SISTEMAS                                                                                                                                                                                                     Developed by Eng. Joel Carbajal Muñoz")
         self.win.configure(bg="#D49FFF")
         self.win.geometry("1100x300")
         
@@ -38,6 +38,7 @@ class MainWindow():
         export_menu.add_command(label="Ambos")
     
     def search(self):
+
         frame=LabelFrame(self.win, text="Busqueda")
         frame.config(bg = "#D49FFF")
         frame.pack(side="top", anchor= E, padx = 10, pady = 10)
@@ -47,11 +48,13 @@ class MainWindow():
         add_event.grid(row= 0, column= 2, padx = 5, pady = 10)
     
     def create_title(self, title):
+
         label= tk.Label(self.win, text=title, font=("Helvetica", 15), fg="#4D4D4D")
         label.configure(bg="#D49FFF")
         label.pack()
 
     def create_table(self): #Aquí podria faltar win. 
+
         try:
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
@@ -72,7 +75,7 @@ class MainWindow():
         #self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
-        connection = sqlite3.connect("C:/Users/SOC/Desktop/test_db/IT_database.db")
+        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
 
         #Creating a cursor
         cursor = connection.cursor()
@@ -94,11 +97,16 @@ class MainWindow():
         self.add_event.pack()
 
     def click(self, e):
+
         self.selection=self.my_tree.focus()
         print(self.selection)
-        traceWindow(self.my_tree.item(self.selection,"values")[0])#[0]
+        self.selection=traceWindow(self.my_tree.item(self.selection, "values"))#[0]
+        
+        #self.text_event=self.my_tree.focus()
+        #self.text_event=traceWindow(self.my_tree.item(self.selection, "values")[2])
     
     
     def show(self):
+
         self.win.mainloop()
     
