@@ -52,19 +52,19 @@ class EventWindow():
             return dateid
     
     def logging_section (self):
-        self.logging_frame= tk.Frame(self.event_window, padx=10, pady=10, bg="#D49FFF")
+        self.logging_frame= tk.Frame(self.event_window, bg="#D49FFF", padx=10, pady=10)
         self.logging_frame.pack(side="top", fill="both") #expand=True,
 
-        label= tk.Label(self.logging_frame, text="Fecha-ID:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") ##F2F2F2
+        label= tk.Label(self.logging_frame, text="Fecha-ID:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
         label.grid(row= 0, column= 0)
 
-        label_date= tk.Label(self.logging_frame, text= EventWindow.generator_dateID(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") #EventWindow.getID()
+        label_date= tk.Label(self.logging_frame, text= EventWindow.generator_dateID(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") #EventWindow.getID() , 
         label_date.grid(row=0, column=1)
         #event_window.text(event_window.dateid(), 0,1)
 
         self.user= StringVar(self.logging_frame)
         self.user.set("Usuario")
-        pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "Coordinador", "Analista", "Guest") #self.user
+        pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "Coordinador", "Analista", "Invitado") #self.user
         pullDown_menuUser.grid(row=0, column= 2, padx=340)
 
         #label_password = tk.Label(self.logging_frame, text="Contraseña", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
@@ -123,7 +123,7 @@ class EventWindow():
             connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
-            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3, TICKETMX3) values ('+self.generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
+            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+self.generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
             connection.commit()
         else:
             connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
@@ -138,67 +138,66 @@ class EventWindow():
     
     def checkbox_section(self):
 
-        self.event_window.checkbox_frame= tk.Frame(self.event_window, padx=10, pady=10, bg="#D49FFF")
+        self.event_window.checkbox_frame= tk.Frame(self.event_window, bg="#D49FFF", padx=10, pady=10)
         self.event_window.checkbox_frame.pack(side="top") #expand=True, fill="both"
 
         
-        label_marks= tk.Label(self.event_window.checkbox_frame, text="MARCADORES", font=("Helvetica", 15), bg="#D49FFF",fg="#4D4D4D")
-        label_marks.grid(row=0, column=2)
+        label_marks= tk.Label(self.event_window.checkbox_frame, text="MARCADORES", font=("Helvetica", 15),fg="#4D4D4D", bg="#D49FFF") #
+        label_marks.grid(column=1, row=0)
         
-        label_mx2= tk.Label(self.event_window.checkbox_frame, text="MX2", bg="#D49FFF",fg="#4D4D4D") #font=("Helvetica", 15)
-        label_mx2.grid(row=1, column=1)
+        label_mx2= tk.Label(self.event_window.checkbox_frame, text="MX2", fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
+        label_mx2.grid(column=0, row=1)
         self.mx2=IntVar(self.event_window.checkbox_frame)
-        checkbutton_mx2=tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF", variable=self.mx2)
-        checkbutton_mx2.grid(row=2, column=1)
+        checkbutton_mx2=tk.Checkbutton(self.event_window.checkbox_frame, variable=self.mx2, bg="#D49FFF") 
+        checkbutton_mx2.grid(column=0, row=2)
 
-        label_mx3= tk.Label(self.event_window.checkbox_frame, text="MX3", bg="#D49FFF",fg="#4D4D4D") #font=("Helvetica", 15)
-        label_mx3.grid(row=1, column=3)
+        label_mx3= tk.Label(self.event_window.checkbox_frame, text="MX3",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
+        label_mx3.grid(column=2, row=1)
         self.mx3=IntVar(self.event_window.checkbox_frame)
-        checkbutton_mx3=tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF", variable=self.mx3)
-        checkbutton_mx3.grid(row=2, column=3)
+        checkbutton_mx3=tk.Checkbutton(self.event_window.checkbox_frame, variable=self.mx3, bg="#D49FFF")
+        checkbutton_mx3.grid(column=2, row=2)
         
 
-        label_weekly= tk.Label(self.event_window.checkbox_frame, text="SEMANAL", bg="#D49FFF",fg="#4D4D4D") #font=("Helvetica", 15)
-        label_weekly.grid(row=3, column=0, padx=30)
+        label_weekly= tk.Label(self.event_window.checkbox_frame, text="SEMANAL",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
+        label_weekly.grid(column=0, row=3, padx=30)
         self.weekly=IntVar(self.event_window.checkbox_frame)
-        checkbutton_weekly = tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF" , variable=self.weekly)
-        checkbutton_weekly.grid(row=4, column=0)
+        checkbutton_weekly = tk.Checkbutton(self.event_window.checkbox_frame, variable=self.weekly, bg="#D49FFF")
+        checkbutton_weekly.grid(column=0, row=4)
         
 
-        label_semester= tk.Label(self.event_window.checkbox_frame, text="SEMESTRAL", bg="#D49FFF",fg="#4D4D4D") #font=("Helvetica", 15)
-        label_semester.grid(row=3, column=1, padx=10)
+        label_semester= tk.Label(self.event_window.checkbox_frame, text="SEMESTRAL", fg="#4D4D4D", bg="#D49FFF") #, bg="#D49FFF" SEMESTRAL
+        label_semester.grid(column=1, row=3 , padx=10)
         self.semester=IntVar(self.event_window.checkbox_frame)
-        checkbutton_semester = tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF", variable=self.semester)
-        checkbutton_semester.grid(row=4, column=1)
-        
-    
-        label_corrective= tk.Label(self.event_window.checkbox_frame, text="CORRECTIVO", bg="#D49FFF",fg="#4D4D4D")
-        label_corrective.grid(row=3, column=2)
-        self.corrective=IntVar(self.event_window.checkbox_frame)
-        checkbutton_corrective = tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF", variable=self.corrective)
-        checkbutton_corrective.grid(row=4, column=2)
+        checkbutton_semester = tk.Checkbutton(self.event_window.checkbox_frame, variable=self.semester, bg="#D49FFF")
+        checkbutton_semester.grid(column=1, row=4)
         
 
-        label_incidence= tk.Label(self.event_window.checkbox_frame, text="INCIDENCIA", bg="#D49FFF",fg="#4D4D4D")
-        label_incidence.grid(row=3, column=3)
+        label_incidence= tk.Label(self.event_window.checkbox_frame, text="INCIDENCIA",fg="#4D4D4D", bg="#D49FFF") 
+        label_incidence.grid(column=2, row=3)
         self.incidence=IntVar(self.event_window.checkbox_frame)
-        checkbutton_incidence = tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF", variable=self.incidence)
-        checkbutton_incidence.grid(row=4, column=3, padx=0)
+        checkbutton_incidence = tk.Checkbutton(self.event_window.checkbox_frame, variable=self.incidence,bg="#D49FFF") 
+        checkbutton_incidence.grid(column=2, row=4, padx=0)
         
+
+        label_corrective= tk.Label(self.event_window.checkbox_frame, text="CORRECTIVO",fg="#4D4D4D", bg="#D49FFF")
+        label_corrective.grid(column=0, row=5)
+        self.corrective=IntVar(self.event_window.checkbox_frame)
+        checkbutton_corrective = tk.Checkbutton(self.event_window.checkbox_frame, variable=self.corrective, bg="#D49FFF")
+        checkbutton_corrective.grid(column=0, row=6)
         
-        label_attention_inc= tk.Label(self.event_window.checkbox_frame, text="ATENCION A INC.", bg="#D49FFF",fg="#4D4D4D")
-        label_attention_inc.grid(row=3, column=4, padx=30)
+        label_attention_inc= tk.Label(self.event_window.checkbox_frame, text="ATENCION A INC.",fg="#4D4D4D", bg="#D49FFF")
+        label_attention_inc.grid(column=2, row=5, padx=30)
         self.attention_inc=IntVar(self.event_window.checkbox_frame)
-        checkbutton_attention_inc = tk.Checkbutton(self.event_window.checkbox_frame, bg="#D49FFF", variable=self.attention_inc)
-        checkbutton_attention_inc.grid(row=4, column=4)
+        checkbutton_attention_inc = tk.Checkbutton(self.event_window.checkbox_frame, variable=self.attention_inc, bg="#D49FFF") 
+        checkbutton_attention_inc.grid(column=2, row=6)
         
-        label_ticket= tk.Label(self.event_window.checkbox_frame, text="#-TICKET", bg="#D49FFF",fg="#4D4D4D")
-        label_ticket.grid(row=5, column=2, pady=10)
+        label_ticket= tk.Label(self.event_window.checkbox_frame, text="#-TICKET", fg="#4D4D4D", bg="#D49FFF")
+        label_ticket.grid(column=1, row=5, pady=10)
         self.ticket=tk.Entry(self.event_window.checkbox_frame)
-        self.ticket.grid(row=6 , column=2)
+        self.ticket.grid(column=1, row=6)
 
         getInto_event= tk.Button(self.event_window.checkbox_frame, text="Ingresar", command= self.get_input)
-        getInto_event.grid(row= 13, column= 2, pady=20)
+        getInto_event.grid(column= 1, row= 13, pady=20)
         print(dir(self))
 
 
