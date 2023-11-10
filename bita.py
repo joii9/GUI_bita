@@ -75,7 +75,7 @@ class MainWindow():
         #self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
+        connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
 
         #Creating a cursor
         cursor = connection.cursor()

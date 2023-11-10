@@ -67,7 +67,7 @@ class traceWindow():
         #print
 
         #Conexion con base de datos para actualizar
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/test_db/IT_database.db")
+        connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
         cursor = connection.cursor()
         cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+aux1+',"'+user+'","'+input_trace+'","'+attention_ticket+'")')
             
