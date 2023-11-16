@@ -1,13 +1,13 @@
 import sqlite3
 import tkinter
 
-
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from datetime import date
 
-#from bita import update_table
+from date import generator_dateID
+
 
 class EventWindow():
     
@@ -23,33 +23,6 @@ class EventWindow():
         self.checkbox_section()
         #self.solution_section()
         self.win.withdraw()
-
-    def generator_dateID(self): 
-        today=date.today() #Esto es para colocar la fecha en el formato correcto añomesdia.
-        dateformat=today.strftime("%Y%m%d")
-        #print(dateformat) #dateformat es un string
-
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db") #Comprobar que no haya entrada con la fecha 
-        cursor = connection.cursor()
-        x =cursor.execute("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
-        check=x.fetchall()
-        #print(check)
-        #print("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
-
-        if str(check) == "[]": #getID esto es para añadir dos digitos despues de la fecha añomesdia+00 inicializado en 1
-            #print("Dentro del if")
-            #print(int(dateformat))
-            dateid= int(dateformat)*100+1
-            #print(dateid)
-            dateid_str=str(dateid)
-            return dateid_str
-        else:
-            print("Dentro del else")
-            check= int(str(check[-1])[1:-2])
-            print(check)
-            dateid=str(check+1)
-            print(dateid)
-            return dateid
     
     def logging_section (self):
         self.logging_frame= tk.Frame(self.event_window, bg="#D49FFF", padx=10, pady=10)
@@ -58,13 +31,12 @@ class EventWindow():
         label= tk.Label(self.logging_frame, text="Fecha-ID:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
         label.grid(row= 0, column= 0)
 
-        label_date= tk.Label(self.logging_frame, text= EventWindow.generator_dateID(self), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") #EventWindow.getID() , 
+        label_date= tk.Label(self.logging_frame, text= generator_dateID(), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") 
         label_date.grid(row=0, column=1)
-        #event_window.text(event_window.dateid(), 0,1)
 
         self.user= StringVar(self.logging_frame)
         self.user.set("Usuario")
-        pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "Coordinador", "Analista", "Invitado") #self.user
+        pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "Coordinador", "Analista", "Invitado") 
         pullDown_menuUser.grid(row=0, column= 2, padx=340)
 
         #label_password = tk.Label(self.logging_frame, text="Contraseña", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
@@ -116,19 +88,19 @@ class EventWindow():
         if mx2 == 1 and mx3==0:
             connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
             cursor = connection.cursor()
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
-            cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+self.generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
+            cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
             connection.commit()
         elif mx2 == 0 and mx3 == 1:
             connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
             cursor = connection.cursor()
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
-            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+self.generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
+            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
             connection.commit()
         else:
             connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
             cursor = connection.cursor()
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+self.generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
             connection.commit()
         
 

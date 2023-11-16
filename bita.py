@@ -5,7 +5,6 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
-#from common import GUI
 from EventWindowGUI import EventWindow
 from TraceWindowGUI import traceWindow
 

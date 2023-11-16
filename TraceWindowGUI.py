@@ -1,39 +1,44 @@
 import tkinter
-#import sqlite3
+import sqlite3
 
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
-from EventWindowGUI import EventWindow
+from date import generator_dateID
 
 class traceWindow():
     
     def __init__(self, selection):
+        self.selection=selection
         self.win= tkinter.Tk()
         self.win.title("SEGUIMIENTO")
         self.win.configure(bg="#D49FFF")
         self.win.geometry("500x400")
-        self.put_label(selection)
+        self.put_label()
         self.update_event()
         self.checkbutton_button()
-        #self.update_ticket()
-        #print(selection)
         self.win.mainloop()
     
-    def put_label(self, selection):
+    def put_label(self):#,selection)
         
-        label= tk.Label(self.win, text=selection[0], font=("Helvetica", 15), fg="#4D4D4D")
+        label= tk.Label(self.win, text=self.selection[0], font=("Helvetica", 15), fg="#4D4D4D")
+        #print(selection[0])
         label.configure(bg="#D49FFF")
         label.pack()
 
-        label1= tk.Label(self.win, text=selection[1], font=("Helvetica", 15), fg="#4D4D4D")
+        label1= tk.Label(self.win, text=self.selection[1], font=("Helvetica", 15), fg="#4D4D4D")
         label1.configure(bg="#D49FFF")
         label1.pack()
 
-        label2= tk.Label(self.win, text=selection[2], font=("Helvetica", 15), fg="#4D4D4D")
+        label2= tk.Label(self.win, text=self.selection[2], font=("Helvetica", 15), fg="#4D4D4D")
         label2.configure(bg="#D49FFF")
         label2.pack()
+
+        self.user= StringVar(self.win)
+        self.user.set("Usuario")
+        pullDown_menuUser = OptionMenu(self.win, self.user, "Coordinador", "Analista", "Invitado") #self.user
+        pullDown_menuUser.pack()
 
     def update_event(self):
 
@@ -55,26 +60,30 @@ class traceWindow():
 
     def update_ticket(self):
         
+        #We get the text
         input_trace=self.event_text.get("1.0","end-1c")
         print(input_trace)
 
+        #We get the value of checkbutton
         attention_inc=self.attention_inc.get()
         print(attention_inc)
-        aux=EventWindow(self)
-        #aux1=aux.generator_dateID()
-        #aux.destroy()
+        #attention_incstr=str(attention_inc) #This is for marks either for one or another
 
-        #print
+        user=self.user.get()
+
+        #aux=EventWindow()
+        #aux1=aux.generator_dateID()
+        #print(aux)
+
+
+        #aux.destroy()
 
         #Conexion con base de datos para actualizar
         connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
         cursor = connection.cursor()
-        cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+aux1+',"'+user+'","'+input_trace+'","'+attention_ticket+'")')
-            
-
-
-
-    
-
-
-#traceWindow=traceWindow()
+        cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
+        #cursor.execute('insert into MARKSMX2(ATINCMX2) values ("'+attention_incstr+'")')
+        
+        #This is for append the attention incidence, but before I need to check the type of event to append in mx2 or mx3
+        #cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+self.generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
+        connection.commit()    
