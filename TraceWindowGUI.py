@@ -67,23 +67,23 @@ class traceWindow():
         #We get the value of checkbutton
         attention_inc=self.attention_inc.get()
         print(attention_inc)
-        #attention_incstr=str(attention_inc) #This is for marks either for one or another
+        attention_incstr=str(attention_inc) #This is for marks either for one or another
 
+        #We get the value of user
         user=self.user.get()
-
-        #aux=EventWindow()
-        #aux1=aux.generator_dateID()
-        #print(aux)
-
-
-        #aux.destroy()
 
         #Conexion con base de datos para actualizar
         connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
         cursor = connection.cursor()
+        cursor.execute('select * from events where ticket="'+self.selection[0]+'"')
+        
+        rows= cursor.fetchall()
+        print(rows)
+        rows= str(cursor.fetchall()).split(",")[0][2:]
+        #print(rows)
+        
         cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
-        #cursor.execute('insert into MARKSMX2(ATINCMX2) values ("'+attention_incstr+'")')
         
         #This is for append the attention incidence, but before I need to check the type of event to append in mx2 or mx3
-        #cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+self.generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
-        connection.commit()    
+        #cursor.execute('insert into MARKSMX2(DATEID, ATINCMX2 ) values ('+generator_dateID()+',"'+attention_incstr+'")')
+        #connection.commit()    

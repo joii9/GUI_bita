@@ -30,6 +30,3 @@ def generator_dateID():
             dateid=str(check+1)
             print(dateid)
             return dateid
-
-
-#generator_dateID()

@@ -61,15 +61,18 @@ class EventWindow():
         print(input_event)
         #input_solution= self.solution_text.get("1.0","end-1c")
 
-        mx2=self.mx2.get()
-        mx3=self.mx3.get()
+        #mx2=self.mx2.get()
+        #mx3=self.mx3.get()
+        MX=self.MX.get()
+        
         weekly=self.weekly.get()
         semester=self.semester.get()
         corrective=self.corrective.get()
         incidence=self.incidence.get()
         attention_inc=self.attention_inc.get()
-        print(mx2)
-        print(mx3)
+        print("MX" +str(MX))
+        #print(mx2)
+        #print(mx3)
         print(weekly)
         print(semester)
         print(corrective)
@@ -85,13 +88,13 @@ class EventWindow():
         input_ticket= self.ticket.get()
         print(input_ticket)
 
-        if mx2 == 1 and mx3==0:
+        if MX == 2:
             connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
             cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
             connection.commit()
-        elif mx2 == 0 and mx3 == 1:
+        elif MX == 3:
             connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
@@ -107,6 +110,7 @@ class EventWindow():
         self.event_window.destroy() #Aquí destruimos event_window
         self.win.deiconify() #Aparecemos al padre, self.win
         self.obj.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
+        
     
     def checkbox_section(self):
 
@@ -117,17 +121,17 @@ class EventWindow():
         label_marks= tk.Label(self.event_window.checkbox_frame, text="MARCADORES", font=("Helvetica", 15),fg="#4D4D4D", bg="#D49FFF") #
         label_marks.grid(column=1, row=0)
         
-        label_mx2= tk.Label(self.event_window.checkbox_frame, text="MX2", fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
-        label_mx2.grid(column=0, row=1)
-        self.mx2=IntVar(self.event_window.checkbox_frame)
-        checkbutton_mx2=tk.Checkbutton(self.event_window.checkbox_frame, variable=self.mx2, bg="#D49FFF") 
-        checkbutton_mx2.grid(column=0, row=2)
+        #label_mx2= tk.Label(self.event_window.checkbox_frame, text="MX2", fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
+        #label_mx2.grid(column=0, row=1)
+        self.MX=IntVar(self.event_window.checkbox_frame) #self.mx2
+        checkbutton_mx2=tk.Radiobutton(self.event_window.checkbox_frame, variable=self.MX, value=2, indicatoron=0, text="MX2", bg="#949426") #self.mx2 bg="#D49FFF"
+        checkbutton_mx2.grid(column=0, row=2, pady=20)
 
-        label_mx3= tk.Label(self.event_window.checkbox_frame, text="MX3",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
-        label_mx3.grid(column=2, row=1)
-        self.mx3=IntVar(self.event_window.checkbox_frame)
-        checkbutton_mx3=tk.Checkbutton(self.event_window.checkbox_frame, variable=self.mx3, bg="#D49FFF")
-        checkbutton_mx3.grid(column=2, row=2)
+        #label_mx3= tk.Label(self.event_window.checkbox_frame, text="MX3",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
+        #label_mx3.grid(column=2, row=1)
+        #self.mx3=IntVar(self.event_window.checkbox_frame)
+        checkbutton_mx3=tk.Radiobutton(self.event_window.checkbox_frame, variable=self.MX, value=3, indicatoron= 0, text="MX3", bg="#408080") #self.mx3 bg="#D49FFF"
+        checkbutton_mx3.grid(column=2, row=2, pady= 10)
         
 
         label_weekly= tk.Label(self.event_window.checkbox_frame, text="SEMANAL",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)

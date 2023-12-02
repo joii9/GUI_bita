@@ -42,7 +42,7 @@ class MainWindow():
         frame.config(bg = "#D49FFF")
         frame.pack(side="top", anchor= E, padx = 10, pady = 10)
         my_entry = Entry(frame) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
-        my_entry.grid()
+        my_entry.grid(padx = 5)
         add_event= Button(frame, text= "Buscar")
         add_event.grid(row= 0, column= 2, padx = 5, pady = 10)
     
@@ -54,11 +54,13 @@ class MainWindow():
 
     def create_table(self): #Aquí podria faltar win. 
 
-        try:
+        #try:
+        if hasattr(self, 'my_tree'):
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
-        except:
-            print("ah ah ahhhh") #En la primer corrida, como my_tree ni add_event existen en la consola se observa la impresion
+        #except:
+        #else:
+            #print("ah ah ahhhh") #En la primer corrida, como my_tree ni add_event existen en la consola se observa la impresion
 
         columns = ("TICKET", "USERID", "EVENT")
         self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
