@@ -85,7 +85,7 @@ class MainWindow():
         cursor.execute("Select TICKET ,USERID, EVENT from EVENTS")
 
         rows= cursor.fetchall()
-        print(rows)
+        #print(rows) Este print son los primeros que pone en el treeview
        
         for row in rows:
             self.my_tree.insert("", 0, values = row)

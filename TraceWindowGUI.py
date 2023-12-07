@@ -10,6 +10,7 @@ from date import generator_dateID
 class traceWindow():
     
     def __init__(self, selection):
+
         self.selection=selection
         self.win= tkinter.Tk()
         self.win.title("SEGUIMIENTO")
@@ -60,30 +61,57 @@ class traceWindow():
 
     def update_ticket(self):
         
+        #We get the value of user
+        user=self.user.get()
+        print(user)
+
         #We get the text
         input_trace=self.event_text.get("1.0","end-1c")
-        print(input_trace)
+        print("ACTUALIZACION DEL EVENTO: " +input_trace)
 
         #We get the value of checkbutton
         attention_inc=self.attention_inc.get()
-        print(attention_inc)
         attention_incstr=str(attention_inc) #This is for marks either for one or another
+        print("Checkbutton " +attention_incstr)
 
-        #We get the value of user
-        user=self.user.get()
+        
 
-        #Conexion con base de datos para actualizar
+        #Conexion con base de datos para comprobar el numero de ticket
         connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
         cursor = connection.cursor()
-        cursor.execute('select * from events where ticket="'+self.selection[0]+'"')
-        
-        rows= cursor.fetchall()
-        print(rows)
-        rows= str(cursor.fetchall()).split(",")[0][2:]
+        cursor.execute('select * from events where ticket="'+self.selection[0]+'"') #Comprobamos los eventos que hay en events con el numero de ticket correspondiente
+        #Otro cursor execute ahora para marksmx2
+        #rows= cursor.fetchall()
         #print(rows)
+        rows=str(cursor.fetchall()).split(",")[0][2:]
+        print("Rows= " +rows) #Mostramos el dateid que corresponda al ticket seleccionado
         
-        cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
+
+        cursor.execute('select * from marksmx2 where dateid="'+rows+'"') #Comprobaremos si existe un evento en MARKSMX2 con el dateid seleccionado
+        markmx2=str(cursor.fetchall()).split(",")[0][2:]
+        print("Estos son los indicadores de MARKSMX2")
+        print(markmx2)
+
+        cursor.execute('select * from marksmx3 where dateid="'+rows+'"') #Comprobaremos si existe un evento en MARKSMX2 con el dateid seleccionado
+        markmx3=str(cursor.fetchall()).split(",")[0][2:]
+        print("Estos son los indicadores de MARKSMX3")
+        print(markmx3)
         
-        #This is for append the attention incidence, but before I need to check the type of event to append in mx2 or mx3
-        #cursor.execute('insert into MARKSMX2(DATEID, ATINCMX2 ) values ('+generator_dateID()+',"'+attention_incstr+'")')
-        #connection.commit()    
+        if rows == markmx2:
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
+            cursor.execute('insert into MARKSMX2(DATEID, ATINCMX2) values ('+generator_dateID()+',"'+attention_incstr+'")')
+            connection.commit()
+            #print("Hay evento en MARKSMX2")
+        elif rows == markmx3:
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
+            cursor.execute('insert into MARKSMX3(DATEID, ATINCMX3) values ('+generator_dateID()+',"'+attention_incstr+'")')
+            connection.commit()
+            #print("Hay evento en MARKSMX3")
+        else:
+            input_ticket= self.ticket.get()
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+input_ticket+'")')
+            connection.commit()
+            #print("No hay eventos en MARKSMX2 ni en MARKSMX3")
+
+        self.win.destroy()
+        self.win.create_table()
