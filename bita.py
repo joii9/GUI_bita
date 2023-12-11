@@ -99,12 +99,14 @@ class MainWindow():
 
     def click(self, e):
 
+        #trace_Window=traceWindow(self)
         self.selection=self.my_tree.focus()
         print(self.selection)
-        self.selection=traceWindow(self.my_tree.item(self.selection, "values"))#[0]
-        
-        #self.text_event=self.my_tree.focus()
-        #self.text_event=traceWindow(self.my_tree.item(self.selection, "values")[2])
+        #traceWindow(self)
+        self.selection=traceWindow(self.my_tree.item(self.selection, "values") ,self)#[0]
+        #variable=traceWindow(arg1,arg2)#arg1=selection, arg2=MainWindow
+
+    
     
     
     def show(self):

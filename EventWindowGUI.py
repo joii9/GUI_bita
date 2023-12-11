@@ -11,10 +11,11 @@ from date import generator_dateID
 
 class EventWindow():
     
-    def __init__(self,obj): #Creamos un constructor que recibe objeto, ya que estamos declarando el main_window en toplevel
-        self.win=obj.win #A la variable self.win recibe del objeto solo win
-        self.obj=obj #self.obj recibe el objeto entero, en esta linea recibe el objeto main_window con todas las funciones miembro
-        self.event_window=Toplevel(self.win)
+    def __init__(self,main_window): #Creamos un constructor que recibe objeto, ya que estamos declarando el main_window en toplevel
+        self.win=main_window.win #A la variable self.win recibe del objeto solo win
+        self.main_window=main_window #self.obj recibe el objeto entero, en esta linea recibe el objeto main_window con todas las funciones miembro
+        #self.event_window=Toplevel(self.win)
+        self.event_window=tkinter.Tk()
         self.event_window.title("Eventos")
         self.event_window.configure(bg="#D49FFF")
         self.event_window.geometry("675x500")
@@ -22,7 +23,7 @@ class EventWindow():
         self.event_section()
         self.checkbox_section()
         #self.solution_section()
-        self.win.deiconify() #witthdraw()
+        #self.win.deiconify() #witthdraw()
         #self.win.destroy()
     
     def logging_section (self):
@@ -109,8 +110,8 @@ class EventWindow():
         
 
         self.event_window.destroy() #Aquí destruimos event_window
-        self.win.deiconify() #Aparecemos al padre, self.win
-        self.obj.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
+        #self.win.deiconify() #Aparecemos al padre, self.win
+        self.main_window.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
         
     
     def checkbox_section(self):

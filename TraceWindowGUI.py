@@ -9,54 +9,58 @@ from date import generator_dateID
 
 class traceWindow():
     
-    def __init__(self, selection):
+    def __init__(self, selection, main_window):
 
+        #self.win=main_window.win
+        self.main_window=main_window
         self.selection=selection
-        self.win= tkinter.Tk()
-        self.win.title("SEGUIMIENTO")
-        self.win.configure(bg="#D49FFF")
-        self.win.geometry("500x400")
+        #self.trace_window=Toplevel(main_window.win)
+        self.trace_window= tkinter.Tk()
+        self.trace_window.title("SEGUIMIENTO")
+        self.trace_window.configure(bg="#D49FFF")
+        self.trace_window.geometry("500x400")
         self.put_label()
         self.update_event()
         self.checkbutton_button()
-        self.win.mainloop()
+        #self.trace_window.deiconify()
+        #self.trace_window.mainloop()
     
     def put_label(self):#,selection)
         
-        label= tk.Label(self.win, text=self.selection[0], font=("Helvetica", 15), fg="#4D4D4D")
+        label= tk.Label(self.trace_window, text=self.selection[0], font=("Helvetica", 15), fg="#4D4D4D")
         #print(selection[0])
         label.configure(bg="#D49FFF")
         label.pack()
 
-        label1= tk.Label(self.win, text=self.selection[1], font=("Helvetica", 15), fg="#4D4D4D")
+        label1= tk.Label(self.trace_window, text=self.selection[1], font=("Helvetica", 15), fg="#4D4D4D")
         label1.configure(bg="#D49FFF")
         label1.pack()
 
-        label2= tk.Label(self.win, text=self.selection[2], font=("Helvetica", 15), fg="#4D4D4D")
+        label2= tk.Label(self.trace_window, text=self.selection[2], font=("Helvetica", 15), fg="#4D4D4D")
         label2.configure(bg="#D49FFF")
         label2.pack()
 
-        self.user= StringVar(self.win)
+        self.user= StringVar(self.trace_window)
         self.user.set("Usuario")
-        pullDown_menuUser = OptionMenu(self.win, self.user, "Coordinador", "Analista", "Invitado") #self.user
+        pullDown_menuUser = OptionMenu(self.trace_window, self.user, "Coordinador", "Analista", "Invitado") #self.user
         pullDown_menuUser.pack()
 
     def update_event(self):
 
-        self.update_frame=LabelFrame(self.win, text="ACTUALIZACION", bg="#D49FFF")
+        self.update_frame=LabelFrame(self.trace_window, text="ACTUALIZACION", bg="#D49FFF")
         self.update_frame.pack(side="top", expand=True, fill="both", padx = 10, pady = 10) #anchor= E
         self.event_text = tk.Text(self.update_frame, height = 5, width = 20)
         self.event_text.pack(expand=True, fill="both", padx= 5, pady=5)
     
     def checkbutton_button(self):
 
-        label_attention_inc= tk.Label(self.win, text="ATENCION A INCIDENCIA.",fg="#4D4D4D" , bg="#D49FFF")#Podria necesitar cambiarlo a frame 
+        label_attention_inc= tk.Label(self.trace_window, text="ATENCION A INCIDENCIA.",fg="#4D4D4D" , bg="#D49FFF")#Podria necesitar cambiarlo a frame 
         label_attention_inc.pack()#row=3, column=4, padx=30
-        self.attention_inc=IntVar(self.win)
-        checkbutton_attention_inc = tk.Checkbutton(self.win, variable=self.attention_inc, bg="#D49FFF")
+        self.attention_inc=IntVar(self.trace_window)
+        checkbutton_attention_inc = tk.Checkbutton(self.trace_window, variable=self.attention_inc, bg="#D49FFF")
         checkbutton_attention_inc.pack()#row=4, column=4
 
-        update_inc= tk.Button(self.win, text="ACTUALIZAR TICKET", command=self.update_ticket)
+        update_inc= tk.Button(self.trace_window, text="ACTUALIZAR TICKET", command=self.update_ticket)
         update_inc.pack(pady=20)
 
     def update_ticket(self):
@@ -108,10 +112,11 @@ class traceWindow():
             connection.commit()
             #print("Hay evento en MARKSMX3")
         else:
-            input_ticket= self.ticket.get()
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+input_ticket+'")')
+            #input_ticket= self.ticket.get()
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","None")')
             connection.commit()
             #print("No hay eventos en MARKSMX2 ni en MARKSMX3")
 
-        self.win.destroy()
-        self.win.create_table()
+        self.trace_window.destroy()
+        #self.win.deiconify()
+        self.main_window.create_table()
