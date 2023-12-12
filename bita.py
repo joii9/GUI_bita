@@ -7,6 +7,7 @@ from tkinter import ttk
 
 from EventWindowGUI import EventWindow
 from TraceWindowGUI import traceWindow
+from miscellaneous import *
 
 
 class MainWindow():
@@ -76,13 +77,14 @@ class MainWindow():
         #self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
+        connection = sqlite3.connect(path)
 
         #Creating a cursor
         cursor = connection.cursor()
 
         #Visualize data
         cursor.execute("Select TICKET ,USERID, EVENT from EVENTS")
+        #cursor.execute("Select * from prueba")
 
         rows= cursor.fetchall()
         #print(rows) Este print son los primeros que pone en el treeview

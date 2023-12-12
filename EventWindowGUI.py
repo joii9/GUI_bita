@@ -6,7 +6,8 @@ from tkinter import *
 from tkinter import ttk
 from datetime import date
 
-from date import generator_dateID
+from miscellaneous import *
+#from date import generator_dateID
 
 
 class EventWindow():
@@ -91,19 +92,19 @@ class EventWindow():
         print(input_ticket)
 
         if MX == 2:
-            connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
+            connection = sqlite3.connect(path)
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
             cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
             connection.commit()
         elif MX == 3:
-            connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
+            connection = sqlite3.connect(path)
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
             cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
             connection.commit()
         else:
-            connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
+            connection = sqlite3.connect(path)
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+generator_dateID()+',"'+user+'","'+input_event+'")')#Borre el atributo TICKET en esta linea, ya que no es necesario
             connection.commit()

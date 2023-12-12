@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
-from date import generator_dateID
+from miscellaneous import *
 
 class traceWindow():
     
@@ -81,7 +81,7 @@ class traceWindow():
         
 
         #Conexion con base de datos para comprobar el numero de ticket
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
+        connection = sqlite3.connect(path)
         cursor = connection.cursor()
         cursor.execute('select * from events where ticket="'+self.selection[0]+'"') #Comprobamos los eventos que hay en events con el numero de ticket correspondiente
         #Otro cursor execute ahora para marksmx2
@@ -103,12 +103,12 @@ class traceWindow():
         
         if rows == markmx2:
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
-            cursor.execute('insert into MARKSMX2(DATEID, ATINCMX2) values ('+generator_dateID()+',"'+attention_incstr+'")')
+            cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","0")')
             connection.commit()
             #print("Hay evento en MARKSMX2")
         elif rows == markmx3:
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
-            cursor.execute('insert into MARKSMX3(DATEID, ATINCMX3) values ('+generator_dateID()+',"'+attention_incstr+'")')
+            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","0")')
             connection.commit()
             #print("Hay evento en MARKSMX3")
         else:
