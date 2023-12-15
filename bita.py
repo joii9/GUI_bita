@@ -63,17 +63,21 @@ class MainWindow():
         #else:
             #print("ah ah ahhhh") #En la primer corrida, como my_tree ni add_event existen en la consola se observa la impresion
 
-        columns = ("TICKET", "USERID", "EVENT")
+        columns = ("TICKET", "USERID", "EVENT", "ATINCMX2", "ATINCMX3")
         self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
 
         self.my_tree.column("TICKET", anchor= CENTER, width=100)
         self.my_tree.column("USERID", anchor= CENTER, width=100) 
-        self.my_tree.column("EVENT", anchor= W, width= 800)
+        self.my_tree.column("EVENT", anchor= W, width= 600)
+        self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
+        self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
         #self.my_tree.column("SOLUTION", anchor= W, width=600)
 
         self.my_tree.heading("TICKET", text="TICKET", anchor=CENTER)
         self.my_tree.heading("USERID", text="USUARIO", anchor=CENTER)
-        self.my_tree.heading("EVENT", text="EVENTO", anchor=W)     
+        self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
+        self.my_tree.heading("ATINCMX2", text="ATENCION MX2", anchor=CENTER)     
+        self.my_tree.heading("ATINCMX3", text="ATENCION MX3", anchor=CENTER)     
         #self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
@@ -83,11 +87,17 @@ class MainWindow():
         cursor = connection.cursor()
 
         #Visualize data
-        cursor.execute("Select TICKET ,USERID, EVENT from EVENTS")
+        QUERY="""   SELECT EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
+                    FROM EVENTS 
+                    LEFT JOIN MARKSMX2 
+                    ON EVENTS.DATEID = MARKSMX2.DATEID 
+                    LEFT JOIN MARKSMX3 
+                    ON EVENTS.DATEID = MARKSMX3.DATEID;"""
+        cursor.execute(QUERY)
         #cursor.execute("Select * from prueba")
 
         rows= cursor.fetchall()
-        #print(rows) Este print son los primeros que pone en el treeview
+        print(rows) #Este print son los primeros que pone en el treeview
        
         for row in rows:
             self.my_tree.insert("", 0, values = row)
