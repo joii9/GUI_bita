@@ -93,6 +93,7 @@ class MainWindow():
                     ON EVENTS.DATEID = MARKSMX2.DATEID 
                     LEFT JOIN MARKSMX3 
                     ON EVENTS.DATEID = MARKSMX3.DATEID;"""
+        
         cursor.execute(QUERY)
         #cursor.execute("Select * from prueba")
 
