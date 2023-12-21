@@ -42,10 +42,16 @@ class MainWindow():
         frame=LabelFrame(self.win, text="Busqueda")
         frame.config(bg = "#D49FFF")
         frame.pack(side="top", anchor= E, padx = 10, pady = 10)
-        my_entry = Entry(frame) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
-        my_entry.grid(padx = 5)
+        self.busqueda = Entry(frame) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
+        self.busqueda.grid(padx = 5)
         add_event= Button(frame, text= "Buscar")
         add_event.grid(row= 0, column= 2, padx = 5, pady = 10)
+
+        buscar=self.busqueda.get()
+        print(buscar)
+
+
+
     
     def create_title(self, title):
 
@@ -119,6 +125,8 @@ class MainWindow():
         self.selection=traceWindow(self.my_tree.item(self.selection, "values") ,self)#[0]
         #variable=traceWindow(arg1,arg2)#arg1=selection, arg2=MainWindow
 
+        buscar=self.busqueda.get()
+        print(buscar)
     
     
     
