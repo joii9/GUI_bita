@@ -39,7 +39,7 @@ class EventWindow():
 
         self.user= StringVar(self.logging_frame)
         self.user.set("Usuario")
-        pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "Coordinador", "Analista", "Invitado") 
+        pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "Coordinador", "Analista", "invitado") 
         pullDown_menuUser.grid(row=0, column= 2, padx=340)
 
         #label_password = tk.Label(self.logging_frame, text="Contraseña", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
