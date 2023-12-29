@@ -9,7 +9,7 @@ def generator_dateID():
         dateformat=today.strftime("%Y%m%d")
         #print(dateformat) #dateformat es un string
 
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db") #Comprobar que no haya entrada con la fecha 
+        connection = sqlite3.connect(path) #Comprobar que no haya entrada con la fecha 
         cursor = connection.cursor()
         x =cursor.execute("SELECT dateid FROM events WHERE dateid>="+dateformat+"00")
         check=x.fetchall()

@@ -16,9 +16,9 @@ class MainWindow():
     def __init__(self):
 
         self.win= tkinter.Tk()
-        self.win.title("BITACORA DE SISTEMAS                                                                                                                                                                                                     Developed by Eng. Joel Carbajal Muñoz")
+        self.win.title("BITACORA DE SISTEMAS - Developed by Eng. Joel Carbajal Muñoz")
         self.win.configure(bg="#D49FFF")
-        self.win.geometry("1100x300")
+        self.win.geometry("1200x300")
         
     
     def bar_menu(self):
@@ -40,8 +40,8 @@ class MainWindow():
 
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
-        my_menu.add_cascade(label="...", menu=about_menu, command=self.win.quit)
-        about_menu.add_command(label="About", command=self.win.quit) 
+        my_menu.add_cascade(label="About", menu=about_menu, command=self.win.quit)
+        about_menu.add_command(label="About", command=self.win.quit) #About window
     
     def search(self):
 
@@ -156,9 +156,10 @@ class MainWindow():
         #else:
             #print("ah ah ahhhh") #En la primer corrida, como my_tree ni add_event existen en la consola se observa la impresion
 
-        columns = ("TICKET", "USERID", "EVENT", "ATINCMX2", "ATINCMX3")
+        columns = ("DATEID", "TICKET", "USERID", "EVENT", "ATINCMX2", "ATINCMX3")
         self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
 
+        self.my_tree.column("DATEID", anchor= CENTER, width=100)
         self.my_tree.column("TICKET", anchor= CENTER, width=100)
         self.my_tree.column("USERID", anchor= CENTER, width=100) 
         self.my_tree.column("EVENT", anchor= W, width= 600)
@@ -166,6 +167,7 @@ class MainWindow():
         self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
         #self.my_tree.column("SOLUTION", anchor= W, width=600)
 
+        self.my_tree.heading("DATEID", text="DATEID", anchor=CENTER)
         self.my_tree.heading("TICKET", text="TICKET", anchor=CENTER)
         self.my_tree.heading("USERID", text="USUARIO", anchor=CENTER)
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
@@ -180,7 +182,7 @@ class MainWindow():
         cursor = connection.cursor()
 
         #Visualize data
-        QUERY="""   SELECT EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
+        QUERY="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
                     FROM EVENTS 
                     LEFT JOIN MARKSMX2 
                     ON EVENTS.DATEID = MARKSMX2.DATEID 

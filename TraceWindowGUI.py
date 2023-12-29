@@ -27,16 +27,16 @@ class traceWindow():
     
     def put_label(self):#,selection)
         
-        label= tk.Label(self.trace_window, text=self.selection[0], font=("Helvetica", 15), fg="#4D4D4D")
+        label= tk.Label(self.trace_window, text=self.selection[1], font=("Helvetica", 15), fg="#4D4D4D")
         #print(selection[0])
         label.configure(bg="#D49FFF")
         label.pack()
 
-        label1= tk.Label(self.trace_window, text=self.selection[1], font=("Helvetica", 15), fg="#4D4D4D")
+        label1= tk.Label(self.trace_window, text=self.selection[2], font=("Helvetica", 15), fg="#4D4D4D")
         label1.configure(bg="#D49FFF")
         label1.pack()
 
-        label2= tk.Label(self.trace_window, text=self.selection[2], font=("Helvetica", 15), fg="#4D4D4D")
+        label2= tk.Label(self.trace_window, text=self.selection[3], font=("Helvetica", 15), fg="#4D4D4D")
         label2.configure(bg="#D49FFF")
         label2.pack()
 
@@ -54,12 +54,16 @@ class traceWindow():
     
     def checkbutton_button(self):
 
-        label_attention_inc= tk.Label(self.trace_window, text="ATENCION A INCIDENCIA.",fg="#4D4D4D" , bg="#D49FFF")#Podria necesitar cambiarlo a frame 
-        label_attention_inc.pack()#row=3, column=4, padx=30
+        
+        self.corrective=IntVar(self.trace_window)
+        checkbutton_corrective= tk.Checkbutton(self.trace_window, variable=self.corrective, bg="#D49FFF", text="Correctivo")
+        checkbutton_corrective.pack()
+        #label_attention_inc= tk.Label(self.trace_window, text="ATENCION A INCIDENCIA.",fg="#4D4D4D" , bg="#D49FFF")#Podria necesitar cambiarlo a frame 
+        #label_attention_inc.pack()#row=3, column=4, padx=30
         self.attention_inc=IntVar(self.trace_window)
-        checkbutton_attention_inc = tk.Checkbutton(self.trace_window, variable=self.attention_inc, bg="#D49FFF")
+        checkbutton_attention_inc = tk.Checkbutton(self.trace_window, variable=self.attention_inc, bg="#D49FFF", text="Atención a Incidencia")
         checkbutton_attention_inc.pack()#row=4, column=4
-
+        
         update_inc= tk.Button(self.trace_window, text="ACTUALIZAR TICKET", command=self.update_ticket)
         update_inc.pack(pady=20)
 
@@ -77,6 +81,10 @@ class traceWindow():
         attention_inc=self.attention_inc.get()
         attention_incstr=str(attention_inc) #This is for marks either for one or another
         print("Checkbutton " +attention_incstr)
+
+        corrective=self.corrective.get()
+        corrective_str=str(corrective)
+        #print(corrective_str)
 
         
 
@@ -101,14 +109,16 @@ class traceWindow():
         print("Estos son los indicadores de MARKSMX3")
         print(markmx3)
         
+        #bug:Cuando seleccionamos las casillas corrective and atencion inc y el evento no fue marcado como mx2 o mx3 de todos modos mete estas dos casillas a mx2
+
         if rows == markmx2:
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
-            cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","0")')
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[1]+'")')
+            cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
             connection.commit()
             #print("Hay evento en MARKSMX2")
         elif rows == markmx3:
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[0]+'")')
-            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","0")')
+            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[1]+'")')
+            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
             connection.commit()
             #print("Hay evento en MARKSMX3")
         else:

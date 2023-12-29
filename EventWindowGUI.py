@@ -40,7 +40,7 @@ class EventWindow():
         self.user= StringVar(self.logging_frame)
         self.user.set("Usuario")
         pullDown_menuUser = OptionMenu(self.logging_frame, self.user, "Coordinador", "Analista", "invitado") 
-        pullDown_menuUser.grid(row=0, column= 2, padx=340)
+        pullDown_menuUser.grid(row=0, column= 2, padx=50) 
 
         #label_password = tk.Label(self.logging_frame, text="Contraseña", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
         #label_password.grid(row=0, column=3)
@@ -91,28 +91,34 @@ class EventWindow():
         input_ticket= self.ticket.get()
         print(input_ticket)
 
+        if user == "Usuario":
+            message_user= Message(self.logging_frame, text="Primero debes seleccionar un usuario", bg="red", width=1000)
+            message_user.grid(row=0, column=3) #expand=True,
+
         if MX == 2:
             connection = sqlite3.connect(path)
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
             cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
-            connection.commit()
+            #connection.commit()
+            self.event_window.destroy() #Aquí destruimos event_window
+            self.main_window.create_table()
         elif MX == 3:
             connection = sqlite3.connect(path)
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
             cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
-            connection.commit()
+            #connection.commit()
         else:
             connection = sqlite3.connect(path)
             cursor = connection.cursor()
             cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+generator_dateID()+',"'+user+'","'+input_event+'")')#Borre el atributo TICKET en esta linea, ya que no es necesario
-            connection.commit()
+            #connection.commit()
         
 
-        self.event_window.destroy() #Aquí destruimos event_window
+        #self.event_window.destroy() #Aquí destruimos event_window
         #self.win.deiconify() #Aparecemos al padre, self.win
-        self.main_window.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
+        #self.main_window.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
         
     
     def checkbox_section(self):
