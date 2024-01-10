@@ -34,14 +34,36 @@ class MainWindow():
         #Create a export menu
         export_menu= Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label="Export", menu= export_menu)
-        export_menu.add_command(label="MX2 - Morelos")
-        export_menu.add_command(label="MX3 - Bicentenario")
-        export_menu.add_command(label="Ambos")
+        #export_menu.add_command(label="MX2 - Morelos")
+        #export_menu.add_command(label="MX3 - Bicentenario")
+        export_menu.add_command(label="MX2 & MX3", command=self.exporting)
 
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label="About", menu=about_menu, command=self.win.quit)
         about_menu.add_command(label="About", command=self.win.quit) #About window
+
+    def exporting (self):
+        
+        connection = sqlite3.connect(path)
+        cursor = connection.cursor()
+
+        #cursor.execute("excel")
+        #connection.commit()
+
+        QUERY_TO_EXPORT="""SELECT EVENTS.DATEID, EVENTS.USERID, EVENTS.TICKET, EVENTS.EVENT, 
+                        MARKSMX2.DAILY, MARKSMX2.WEEKLY, MARKSMX2.SEMESTER, MARKSMX2.INCMX2, MARKSMX2.CORRMX2, MARKSMX2.ATINCMX2, 
+                        MARKSMX3.DAILY, MARKSMX3.WEEKLY, MARKSMX3.SEMESTER, MARKSMX3.INCMX3, MARKSMX3.CORRMX3, MARKSMX3.ATINCMX3
+                        FROM EVENTS
+                        LEFT JOIN MARKSMX2
+                        ON EVENTS.DATEID = MARKSMX2.DATEID
+                        LEFT JOIN MARKSMX3
+                        ON EVENTS.DATEID = MARKSMX3.DATEID;"""
+        
+        cursor.execute(QUERY_TO_EXPORT)
+        connection.commit()
+        #rows= cursor.fetchall()
+        #print(rows)
     
     def search(self):
 
@@ -72,7 +94,7 @@ class MainWindow():
         #texto='"%analista%"'
         #print(texto)
 
-        connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
+        connection = sqlite3.connect(path)
         cursor = connection.cursor()
 
         #print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={buscar_TU} OR USERID={buscar_TU} OR EVENT LIKE {texto}")
