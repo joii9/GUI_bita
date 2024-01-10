@@ -16,7 +16,7 @@ class MainWindow():
     def __init__(self):
 
         self.win= tkinter.Tk()
-        self.win.title("BITACORA DE SISTEMAS - Developed by Eng. Joel Carbajal Muñoz")
+        self.win.title("BITACORA DE SISTEMAS")
         self.win.configure(bg="#D49FFF")
         self.win.geometry("1200x300")
         
@@ -45,6 +45,8 @@ class MainWindow():
     
     def search(self):
 
+        #Aun me falta buscar por DATEID
+        
         frame=LabelFrame(self.win, text="Busqueda")
         frame.config(bg = "#D49FFF")
         frame.pack(side="top", anchor= E, padx = 10, pady = 10)
