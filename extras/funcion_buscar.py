@@ -1,13 +1,14 @@
 import sqlite3
 import webbrowser
 
-texto='"%izopsws%"'
+texto='"%analista%"'
 print(texto)
 
 connection = sqlite3.connect("C:/Users/Joel/Desktop/GUI_bita/IT_database.db")
 cursor = connection.cursor()
-#print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE EVENT LIKE {texto}")
-cursor.execute(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE EVENT LIKE {texto}")
+
+print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={texto} OR USERID={texto} OR EVENT LIKE {texto}")
+#cursor.execute(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={texto} OR USERID={texto} OR EVENT LIKE {texto}")
 rows= cursor.fetchall()
 print(rows)
 
@@ -19,6 +20,8 @@ print(rows[0])
 #chain=str(rows[0]).split(",")
 #print("Y ESTE?")
 #print(chain[0])
+
+connection.close()
 
 head="""
     <body bgcolor="black">
