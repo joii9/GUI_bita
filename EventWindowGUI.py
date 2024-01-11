@@ -81,6 +81,7 @@ class EventWindow():
 
     def get_input(self):
 
+        #Falta agregar DAILY a MARKSMX
 
         user= self.user.get()
         print(user)
@@ -109,6 +110,7 @@ class EventWindow():
         print(incidence)
         print(attention_inc)
         
+        dailystr=str(daily)
         weeklystr=str(weekly)
         semesterstr=str(semester)
         correctivestr=str(corrective)
@@ -122,13 +124,13 @@ class EventWindow():
                 connection = sqlite3.connect(path)
                 cursor = connection.cursor()
                 cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
-                cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
+                cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2, DAILY) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'","'+dailystr+'")')
                 connection.commit()    
             elif MX == 3:
                 connection = sqlite3.connect(path)
                 cursor = connection.cursor()
                 cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
-                cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'")')
+                cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3, DAILY) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'","'+dailystr+'")')
                 connection.commit()
             else:
                 connection = sqlite3.connect(path)
@@ -151,7 +153,7 @@ class EventWindow():
         checkbutton_mx2=tk.Radiobutton(self.event_window.checkbox_frame, variable=self.MX, value=2, indicatoron=0, text="MX2", bg="#949426") #self.mx2 bg="#D49FFF"
         checkbutton_mx2.grid(column=0, row=0, pady=20)
 
-        label_satelites= tk.Label(self.event_window.checkbox_frame, text="BOTONES", font=("Helvetica", 15), fg="#4D4D4D", bg="#D49FFF")
+        label_satelites= tk.Label(self.event_window.checkbox_frame, text="    BOTONES", font=("Helvetica", 15), fg="#4D4D4D", bg="#D49FFF")
         label_satelites.grid(column=1, columnspan=2, row=0, pady= 10)
 
         #label_mx3= tk.Label(self.event_window.checkbox_frame, text="MX3",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
