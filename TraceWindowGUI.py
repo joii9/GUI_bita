@@ -18,7 +18,8 @@ class traceWindow():
         self.trace_window= tkinter.Tk()
         self.trace_window.title("SEGUIMIENTO")
         self.trace_window.configure(bg="#D49FFF")
-        self.trace_window.geometry("500x400")
+        self.trace_window.geometry("500x500")
+        #self.trace_window.resizable()
         self.put_label()
         self.update_event()
         self.checkbutton_button()
@@ -27,16 +28,16 @@ class traceWindow():
     
     def put_label(self):#,selection)
         
-        label= tk.Label(self.trace_window, text=self.selection[1], font=("Helvetica", 15), fg="#4D4D4D")
+        label= tk.Label(self.trace_window, text=self.selection[1], font=("Helvetica", 12), fg="#4D4D4D")
         #print(selection[0])
         label.configure(bg="#D49FFF")
         label.pack()
 
-        label1= tk.Label(self.trace_window, text=self.selection[2], font=("Helvetica", 15), fg="#4D4D4D")
+        label1= tk.Label(self.trace_window, text=self.selection[2], font=("Helvetica", 12), fg="#4D4D4D")
         label1.configure(bg="#D49FFF")
         label1.pack()
 
-        label2= tk.Label(self.trace_window, text=self.selection[3], font=("Helvetica", 15), fg="#4D4D4D")
+        label2= tk.Label(self.trace_window, text=self.selection[3], font=("Helvetica", 12), fg="#4D4D4D", wraplength=480, justify=LEFT)
         label2.configure(bg="#D49FFF")
         label2.pack()
 
