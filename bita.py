@@ -1,6 +1,7 @@
 import tkinter
 import sqlite3
 import webbrowser
+import subprocess
 
 import tkinter as tk
 from tkinter import *
@@ -36,7 +37,7 @@ class MainWindow():
         my_menu.add_cascade(label="Export", menu= export_menu)
         #export_menu.add_command(label="MX2 - Morelos")
         #export_menu.add_command(label="MX3 - Bicentenario")
-        export_menu.add_command(label="MX2 & MX3", command=self.exporting)
+        export_menu.add_command(label="Indicadores", command=self.exporting)
 
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
@@ -45,25 +46,7 @@ class MainWindow():
 
     def exporting (self):
         
-        connection = sqlite3.connect(path)
-        cursor = connection.cursor()
-
-        #cursor.execute("excel")
-        #connection.commit()
-
-        QUERY_TO_EXPORT="""SELECT EVENTS.DATEID, EVENTS.USERID, EVENTS.TICKET, EVENTS.EVENT, 
-                        MARKSMX2.DAILY, MARKSMX2.WEEKLY, MARKSMX2.SEMESTER, MARKSMX2.INCMX2, MARKSMX2.CORRMX2, MARKSMX2.ATINCMX2, 
-                        MARKSMX3.DAILY, MARKSMX3.WEEKLY, MARKSMX3.SEMESTER, MARKSMX3.INCMX3, MARKSMX3.CORRMX3, MARKSMX3.ATINCMX3
-                        FROM EVENTS
-                        LEFT JOIN MARKSMX2
-                        ON EVENTS.DATEID = MARKSMX2.DATEID
-                        LEFT JOIN MARKSMX3
-                        ON EVENTS.DATEID = MARKSMX3.DATEID;"""
-        
-        cursor.execute(QUERY_TO_EXPORT)
-        connection.commit()
-        #rows= cursor.fetchall()
-        #print(rows)
+        subprocess.call(["sqlite3", "IT_database.db", ". read QUERY_TO_EXPORT.sql"], shell=True) 
     
     def search(self):
 
