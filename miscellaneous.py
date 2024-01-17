@@ -4,6 +4,24 @@ from datetime import date
 
 path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
 
+text_about= """
+Version 1.0
+
+DESARROLLO
+
+Ing. Joel Carbajal Muñoz
+
+
+AGRADECIMIENTOS
+
+Ing. Andrea Mijaru Sanchez Hernandez
+
+Ing. Roberto Cadena Vega
+
+M. en C. Jorge Tlacaelel Cruz Garcia
+
+"""
+
 def generator_dateID(): 
         today=date.today() #Esto es para colocar la fecha en el formato correcto añomesdia.
         dateformat=today.strftime("%Y%m%d")
