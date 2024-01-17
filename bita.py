@@ -9,6 +9,7 @@ from tkinter import ttk
 
 from EventWindowGUI import EventWindow
 from TraceWindowGUI import traceWindow
+from aboutWindowGUI import AboutWindow
 from miscellaneous import *
 
 
@@ -42,7 +43,7 @@ class MainWindow():
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label="About", menu=about_menu, command=self.win.quit)
-        about_menu.add_command(label="About", command=self.win.quit) #About window
+        about_menu.add_command(label="About", command=AboutWindow) #About window
 
     def exporting (self):
         
