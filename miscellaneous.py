@@ -5,7 +5,16 @@ from datetime import date
 path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
 
 text_about= """
+BITACORA DE SISTEMAS 
 Version 1.0
+2024
+
+Sistema Satelital Mexicano
+MEXSAT
+
+Gerencia del Centro del Control Satelital Iztpalapa
+Cordinación de Sistemas
+
 
 DESARROLLO
 
@@ -19,6 +28,8 @@ Ing. Andrea Mijaru Sanchez Hernandez
 Ing. Roberto Cadena Vega
 
 M. en C. Jorge Tlacaelel Cruz Garcia
+
+C. America Citlalli Hernandez Vargas
 
 """
 

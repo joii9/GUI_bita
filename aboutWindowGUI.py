@@ -10,7 +10,7 @@ class AboutWindow():
         self.about=tkinter.Tk()
         self.about.title("Acerca de...")
         self.about.configure(bg="#D49FFF")
-        self.about.geometry("300x250")
+        self.about.geometry("300x400")
         self.creating_text()
     
     def creating_text(self):
