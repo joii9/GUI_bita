@@ -82,7 +82,7 @@ class MainWindow():
         cursor = connection.cursor()
 
         #print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={buscar_TU} OR USERID={buscar_TU} OR EVENT LIKE {texto}")
-        cursor.execute(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={buscar_TU} OR USERID={buscar_TU} OR EVENT LIKE {texto}")
+        cursor.execute(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE DATEID={texto} OR TICKET={buscar_TU} OR USERID={buscar_TU} OR EVENT LIKE {texto}")
         rows= cursor.fetchall()
         print(rows)
 
