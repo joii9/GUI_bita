@@ -67,22 +67,47 @@ class MainWindow():
     def create_tableHTML(self):
         
         buscar=self.busqueda.get()
-        print(buscar)
-        
-        
-        buscar_TU=f'"{buscar}"'
-        print(buscar_TU)
-        texto=f'"%{buscar}%"'
-        print(texto)
+        print(type(buscar))
 
-        #texto='"%analista%"'
-        #print(texto)
+        try:
+            data=int(buscar)
+            data_plus= data+1
+            print(data_plus)
+            under=buscar[::-1].zfill(10)[::-1]
+            print(under)
+            top=str(data_plus)[::-1].zfill(10)[::-1]
+            print(top)
+            texto=f'"%{buscar}%"'
+            QUERY_SEARCH=f"""
+            SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
+            WHERE DATEID > {under} AND DATEID < {top}
+            """
+        except:
+            buscar_texto=f'"{buscar}"'
+            print(buscar_texto)
+            texto=f'"%{buscar}%"'
+            print(texto)
+            QUERY_SEARCH= f"""
+            SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
+            WHERE TICKET={buscar_texto}
+            OR USERID={buscar_texto}
+            OR EVENT LIKE {texto}
+            """
+        
 
         connection = sqlite3.connect(path)
         cursor = connection.cursor()
 
-        #print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={buscar_TU} OR USERID={buscar_TU} OR EVENT LIKE {texto}")
-        cursor.execute(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE DATEID={buscar_TU} OR TICKET={buscar_TU} OR USERID={buscar_TU} OR EVENT LIKE {texto}")
+        #QUERY_TEXT= f"""
+        #SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
+        #WHERE DATEID > {under} AND DATEID < {top}
+        #OR TICKET={buscar_texto}
+        #OR USERID={buscar_texto}
+        #OR EVENT LIKE {texto}
+        #"""
+
+        #print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={buscar_texto} OR USERID={buscar_texto} OR EVENT LIKE {texto}")
+        cursor.execute(QUERY_SEARCH)
         rows= cursor.fetchall()
         print(rows)
 
