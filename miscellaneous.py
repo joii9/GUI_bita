@@ -4,9 +4,17 @@ from datetime import date
 
 path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
 
+#QUERY_TO_SEARCH= f"""
+#        SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
+#        WHERE DATEID = {buscar_TU}
+#        OR TICKET={buscar_TU}
+#        OR USERID={buscar_TU}
+#        OR EVENT LIKE {texto}
+#        """
+
 text_about= """
 BITACORA DE SISTEMAS 
-Version 1.0.1
+Version 0.0.1
 2024
 
 Sistema Satelital Mexicano
