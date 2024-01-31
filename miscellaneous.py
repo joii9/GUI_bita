@@ -20,7 +20,7 @@ Version 0.0.1
 Sistema Satelital Mexicano
 MEXSAT
 
-Gerencia del Centro del Control Satelital Iztpalapa
+Gerencia del Centro de Control Satelital Iztpalapa
 Cordinación de Sistemas
 
 
