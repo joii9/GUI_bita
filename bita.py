@@ -80,8 +80,8 @@ class MainWindow():
             texto=f'"%{buscar}%"'
             QUERY_SEARCH=f"""
             SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
-            WHERE DATEID > {under} AND DATEID < {top}
-            """
+            WHERE DATEID >= {under} AND DATEID < {top}
+            """ 
         except:
             buscar_texto=f'"{buscar}"'
             print(buscar_texto)
