@@ -14,7 +14,7 @@ path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 0.0.1
+Version 0.0.2
 2024
 
 Sistema Satelital Mexicano
