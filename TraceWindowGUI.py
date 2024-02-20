@@ -68,11 +68,31 @@ class traceWindow():
         update_inc= tk.Button(self.trace_window, text="ACTUALIZAR TICKET", command=self.update_ticket)
         update_inc.pack(pady=20)
 
+    def validation(self):
+
+        user= self.user.get()
+        input_trace= str(self.event_text.get("1.0","end-1c"))
+
+        if hasattr(self, 'message_user'):
+            self.message_user.destroy()
+
+        if user == "Usuario":
+            print("hey")
+            self.message_user= Message(self.trace_window, text="Primero debes seleccionar un usuario", bg="red", width=1000)  
+            self.message_user.pack()
+        elif input_trace == "":
+            self.message_user= Message(self.trace_window, text="¿Cual es la actualización?", bg="red", width=1000)
+            self.message_user.pack()
+        else:
+            return True
+        return False
+    
     def update_ticket(self):
         
         #We get the value of user
         user=self.user.get()
         print(user)
+
 
         #We get the text
         input_trace=self.event_text.get("1.0","end-1c")
@@ -111,23 +131,23 @@ class traceWindow():
         print(markmx3)
         
         #bug:Cuando seleccionamos las casillas corrective and atencion inc y el evento no fue marcado como mx2 o mx3 de todos modos mete estas dos casillas a mx2
-
-        if rows == markmx2:
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[1]+'")')
-            cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
-            connection.commit()
+        if self.validation() == True:
+            if rows == markmx2:
+                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[1]+'")')
+                cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
+                connection.commit()
             #print("Hay evento en MARKSMX2")
-        elif rows == markmx3:
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[1]+'")')
-            cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
-            connection.commit()
+            elif rows == markmx3:
+                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[1]+'")')
+                cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
+                connection.commit()
             #print("Hay evento en MARKSMX3")
-        else:
+            else:
             #input_ticket= self.ticket.get()
-            cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","None")')
-            connection.commit()
+                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","None")')
+                connection.commit()
             #print("No hay eventos en MARKSMX2 ni en MARKSMX3")
 
-        self.trace_window.destroy()
+            self.trace_window.destroy()
         #self.win.deiconify()
         self.main_window.create_table()
