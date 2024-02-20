@@ -123,20 +123,20 @@ class EventWindow():
             if MX == 2:
                 connection = sqlite3.connect(path)
                 cursor = connection.cursor()
-                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
+                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event.replace('"',"''")+'","'+input_ticket+'")')
                 cursor.execute('insert into MARKSMX2(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2, DAILY) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'","'+dailystr+'")')
                 connection.commit()    
             elif MX == 3:
                 connection = sqlite3.connect(path)
                 cursor = connection.cursor()
-                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event+'","'+input_ticket+'")')
+                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_event.replace('"',"''")+'","'+input_ticket+'")')
                 cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3, DAILY) values ('+generator_dateID()+',"'+weeklystr+'","'+semesterstr+'","'+incidencestr+'","'+attention_incstr+'","'+correctivestr+'","'+dailystr+'")')
                 connection.commit()
             else:
                 connection = sqlite3.connect(path)
                 cursor = connection.cursor()
-                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+generator_dateID()+',"'+user+'","'+input_event+'")')#Borre el atributo TICKET en esta linea, ya que no es necesario
-                #connection.commit()
+                cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+generator_dateID()+',"'+user+'","'+input_event.replace('"',"''")+'")')#Borre el atributo TICKET en esta linea, ya que no es necesario
+                connection.commit()
             self.event_window.destroy() #Aquí destruimos event_window
             #self.win.deiconify() #Aparecemos al padre, self.win
             self.main_window.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
