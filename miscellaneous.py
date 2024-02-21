@@ -3,6 +3,7 @@ import sqlite3
 from datetime import date
 
 path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
+search_path="C:/Users/Joel/Desktop/GUI_bita/extras/table.html"
 
 #QUERY_TO_SEARCH= f"""
 #        SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS

@@ -170,7 +170,7 @@ class MainWindow():
         f = open("extras/table.html", "r")
         print(f.read())
 
-        webbrowser.open("C:/Users/Joel/Desktop/GUI_bita/extras/table.html")
+        webbrowser.open(search_path)
 
     
     def create_title(self, title):
