@@ -58,6 +58,15 @@ class EventWindow():
 
     def validation(self):
 
+        year=f'"%{-24}"'
+
+        connection = sqlite3.connect(path)
+        cursor = connection.cursor()
+        cursor.execute("select ticket from events where ticket like "+year+"")
+        tickets_rows=cursor.fetchall()
+        print(tickets_rows[-1][0])
+
+
         user= str(self.user.get())
         input_event= str(self.event_text.get("1.0","end-1c"))
         incidence=self.incidence.get()
@@ -74,6 +83,9 @@ class EventWindow():
             self.message_user.grid(row=0, column=3)
         elif incidence == 1 and input_ticket == "" :
             self.message_user= Message(self.logging_frame, text="¿Cual es el #-TICKET?", bg="red", width=1000)
+            self.message_user.grid(row=0, column=3)
+        elif incidence == 1 and input_ticket == tickets_rows[-1][0]:
+            self.message_user= Message(self.logging_frame, text="#-Ticket existente. VERIFICA", bg="red", width=1000)
             self.message_user.grid(row=0, column=3)
         else:
             return True
