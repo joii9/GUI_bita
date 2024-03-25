@@ -57,16 +57,7 @@ class EventWindow():
         self.event_text.pack(expand=True, fill="both", padx= 5, pady=5)
 
     def validation(self):
-
-        year=f'"%{-24}"'
-
-        connection = sqlite3.connect(path)
-        cursor = connection.cursor()
-        cursor.execute("select ticket from events where ticket like "+year+"")
-        tickets_rows=cursor.fetchall()
-        print(tickets_rows[-1][0])
-
-
+        
         user= str(self.user.get())
         input_event= str(self.event_text.get("1.0","end-1c"))
         incidence=self.incidence.get()
@@ -74,6 +65,14 @@ class EventWindow():
 
         if hasattr(self, 'message_user'):
             self.message_user.destroy()
+        
+        if len(input_ticket)>0:
+            connection = sqlite3.connect(path)
+            cursor = connection.cursor()
+            cursor.execute('SELECT ticket from events WHERE ticket="'+input_ticket+'"')
+            ticket_equals=cursor.fetchall()
+        else:
+            ticket_equals=[]
 
         if user == "Usuario":
             self.message_user= Message(self.logging_frame, text="Primero debes seleccionar un usuario", bg="red", width=1000)  
@@ -84,8 +83,8 @@ class EventWindow():
         elif incidence == 1 and input_ticket == "" :
             self.message_user= Message(self.logging_frame, text="¿Cual es el #-TICKET?", bg="red", width=1000)
             self.message_user.grid(row=0, column=3)
-        elif incidence == 1 and input_ticket == tickets_rows[-1][0]:
-            self.message_user= Message(self.logging_frame, text="#-Ticket existente. VERIFICA", bg="red", width=1000)
+        elif len(ticket_equals)>0: 
+            self.message_user= Message(self.logging_frame, text="TICKET ya existente", bg="red", width=1000)
             self.message_user.grid(row=0, column=3)
         else:
             return True
