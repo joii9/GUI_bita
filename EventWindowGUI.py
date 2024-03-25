@@ -84,7 +84,7 @@ class EventWindow():
             self.message_user= Message(self.logging_frame, text="¿Cual es el #-TICKET?", bg="red", width=1000)
             self.message_user.grid(row=0, column=3)
         elif len(ticket_equals)>0: 
-            self.message_user= Message(self.logging_frame, text="TICKET ya existente", bg="red", width=1000)
+            self.message_user= Message(self.logging_frame, text="#-TICKET existente. VERIFICA", bg="red", width=1000)
             self.message_user.grid(row=0, column=3)
         else:
             return True
