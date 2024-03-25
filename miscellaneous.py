@@ -15,7 +15,7 @@ search_path="C:/Users/Joel/Desktop/GUI_bita/extras/table.html"
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 1.1.3
+Version 1.2.3
 2024
 
 Sistema Satelital Mexicano
