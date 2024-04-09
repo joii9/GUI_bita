@@ -4,6 +4,7 @@ from datetime import date
 
 path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
 search_path="C:/Users/Joel/Desktop/GUI_bita/extras/table.html"
+ind="C:/Users/Joel/Desktop/GUI_bita/indicadores.sql"
 
 
 QUERY_TV="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
@@ -15,7 +16,7 @@ QUERY_TV="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT,
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 1.3.3
+Version 1.3.4
 2024
 
 Sistema Satelital Mexicano
