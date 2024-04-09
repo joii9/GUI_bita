@@ -119,7 +119,7 @@ ON EVENTS.DATEID = MARKSMX3.DATEID
 WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
 
 
-                    f = open("C:/Users/Joel/Desktop/GUI_bita/indicadores.sql", "w")
+                    f = open(ind, "w")
                     f.write(QUERY_INDICATORS)
                     f.close()
 
