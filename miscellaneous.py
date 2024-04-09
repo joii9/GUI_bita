@@ -5,17 +5,17 @@ from datetime import date
 path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
 search_path="C:/Users/Joel/Desktop/GUI_bita/extras/table.html"
 
-#QUERY_TO_SEARCH= f"""
-#        SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
-#        WHERE DATEID = {buscar_TU}
-#        OR TICKET={buscar_TU}
-#        OR USERID={buscar_TU}
-#        OR EVENT LIKE {texto}
-#        """
+
+QUERY_TV="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
+                    FROM EVENTS 
+                    LEFT JOIN MARKSMX2 
+                    ON EVENTS.DATEID = MARKSMX2.DATEID 
+                    LEFT JOIN MARKSMX3 
+                    ON EVENTS.DATEID = MARKSMX3.DATEID;"""
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 1.2.3
+Version 1.3.3
 2024
 
 Sistema Satelital Mexicano
@@ -41,6 +41,7 @@ M. en C. Jorge Tlacaelel Cruz Garcia
 C. America Citlalli Hernandez Vargas
 
 """
+
 
 def generator_dateID(): 
         today=date.today() #Esto es para colocar la fecha en el formato correcto añomesdia.
