@@ -93,7 +93,41 @@ class MainWindow():
             OR USERID={buscar_texto}
             OR EVENT LIKE {texto}
             """
-        
+        if buscar[:-24] == "ind:":
+            print("Estas dentro del if")    
+            if len(buscar[5:-13]) == 10:
+                print("Se trata del inicio de los indicadores ")
+                inicio=buscar[5:-13]
+                print(inicio)        
+                if len(buscar[-10:]) == 10:
+                    print("Se trata del fin de los indicadores")
+                    fin=buscar[-10:]
+                    print(fin)
+
+                    connection = sqlite3.connect(path)
+                    cursor = connection.cursor()
+
+                    QUERY_INDICATORS=""".mode box
+.headers on
+.excel
+SELECT EVENTS.DATEID, EVENTS.USERID, EVENTS.TICKET, EVENTS.EVENT, MARKSMX2.DAILY, MARKSMX2.WEEKLY, MARKSMX2.SEMESTER, MARKSMX2.INCMX2, MARKSMX2.CORRMX2, MARKSMX2.ATINCMX2, MARKSMX3.DAILY, MARKSMX3.WEEKLY, MARKSMX3.SEMESTER, MARKSMX3.INCMX3, MARKSMX3.CORRMX3, MARKSMX3.ATINCMX3
+FROM EVENTS
+LEFT JOIN MARKSMX2
+ON EVENTS.DATEID = MARKSMX2.DATEID
+LEFT JOIN MARKSMX3
+ON EVENTS.DATEID = MARKSMX3.DATEID
+WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
+
+
+                    f = open("C:/Users/Joel/Desktop/GUI_bita/indicadores.sql", "w")
+                    f.write(QUERY_INDICATORS)
+                    f.close()
+
+                    subprocess.call(["sqlite3", "IT_database.db", ".read indicadores.sql"], shell=True)
+    
+
+                    
+        #else: Este else deberia estar habilitado, pero debido a un error en la linea #149 se comporta de forma correcta
 
         connection = sqlite3.connect(path)
         cursor = connection.cursor()
@@ -214,15 +248,8 @@ class MainWindow():
         #Creating a cursor
         cursor = connection.cursor()
 
-        #Visualize data
-        QUERY="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
-                    FROM EVENTS 
-                    LEFT JOIN MARKSMX2 
-                    ON EVENTS.DATEID = MARKSMX2.DATEID 
-                    LEFT JOIN MARKSMX3 
-                    ON EVENTS.DATEID = MARKSMX3.DATEID;"""
         
-        cursor.execute(QUERY)
+        cursor.execute(QUERY_TV)
         #cursor.execute("Select * from prueba")
 
         rows= cursor.fetchall()
@@ -245,9 +272,7 @@ class MainWindow():
         print(self.selection)
         #traceWindow(self)
         self.selection=traceWindow(self.my_tree.item(self.selection, "values") ,self)#[0]
-        #variable=traceWindow(arg1,arg2)#arg1=selection, arg2=MainWindow
-    
-    
+        #variable=traceWindow(arg1,arg2)#arg1=selection, arg2=MainWindow    
     
     def show(self):
 
