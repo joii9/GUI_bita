@@ -6,6 +6,7 @@ import subprocess
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 from EventWindowGUI import EventWindow
 from TraceWindowGUI import traceWindow
@@ -31,19 +32,18 @@ class MainWindow():
         #Create a menu item
         file_menu = Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Indicadores", command= self.exporting)
         file_menu.add_command(label= "Exit...", command=self.win.quit)
-        
-        #Create a export menu
-        export_menu= Menu(my_menu, tearoff=0)
-        my_menu.add_cascade(label="Export", menu= export_menu)
-        #export_menu.add_command(label="MX2 - Morelos")
-        #export_menu.add_command(label="MX3 - Bicentenario")
-        export_menu.add_command(label="Indicadores", command=self.exporting)
 
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
-        my_menu.add_cascade(label="About", menu=about_menu, command=self.win.quit)
+        my_menu.add_cascade(label="Help", menu=about_menu, command=self.win.quit)
+        about_menu.add_command(label="Info. Indicadores", command=self.ind_info)
         about_menu.add_command(label="About", command=AboutWindow) #About window
+    
+    def ind_info (self):
+
+        messagebox.showinfo("INFORMACIÓN DE INDICADORES", Ind_Info)
 
     def exporting (self):
         
@@ -57,6 +57,9 @@ class MainWindow():
         frame.config(bg = "#D49FFF")
         frame.pack(side="top", anchor= E, padx = 10, pady = 10)
         self.busqueda = Entry(frame) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
+        #self.busqueda.bind("<Button-1>", lambda e: self.busqueda.delete(0, tk.END))
+        #self.busqueda.insert(END, "ind: YYYYMMDDII - YYYYMMDDII")
+        self.busqueda.config(width=30)
         self.busqueda.grid(padx = 5)
         add_event= Button(frame, text= "Buscar", command=self.create_tableHTML)
         add_event.grid(row= 0, column= 2, padx = 5, pady = 10)
@@ -93,7 +96,10 @@ class MainWindow():
             OR USERID={buscar_texto}
             OR EVENT LIKE {texto}
             """
-        if buscar[:-24] == "ind:":
+        
+        if buscar[0:4] == "ind:" and len(buscar) < 28:
+            messagebox.showerror("Error de formato", Info)
+        elif buscar[:-24] == "ind:" and len(buscar) == 28:
             print("Estas dentro del if")    
             if len(buscar[5:-13]) == 10:
                 print("Se trata del inicio de los indicadores ")
@@ -127,18 +133,11 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
     
 
                     
-        #else: Este else deberia estar habilitado, pero debido a un error en la linea #149 se comporta de forma correcta
+        #else: Este else deberia estar habilitado, pero debido a un error en la linea #148 se comporta de forma correcta
 
         connection = sqlite3.connect(path)
         cursor = connection.cursor()
 
-        #QUERY_TEXT= f"""
-        #SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
-        #WHERE DATEID > {under} AND DATEID < {top}
-        #OR TICKET={buscar_texto}
-        #OR USERID={buscar_texto}
-        #OR EVENT LIKE {texto}
-        #"""
 
         #print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={buscar_texto} OR USERID={buscar_texto} OR EVENT LIKE {texto}")
         cursor.execute(QUERY_SEARCH)
@@ -147,12 +146,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
 
         print("LISTA rows[0]")
         print(rows[0])
-        #print("STRING rows[0]")
-        #print(str(rows[0]))
-
-        #chain=str(rows[0]).split(",")
-        #print("Y ESTE?")
-        #print(chain[0])
+        
 
         connection.close()
 
@@ -174,7 +168,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
 
             """
 
-        def generating_file(rows):
+        def writing_rows(rows):
     
             table= """
                 <tr bgcolor="black" align="center">
@@ -191,7 +185,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
 
         text=""
         for row in rows:
-            text+=generating_file(row)
+            text+=writing_rows(row)
             #print(text)
 
         print("INICIO")
@@ -215,16 +209,12 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
 
     def create_table(self): #Aquí podria faltar win. 
 
-        #try:
         if hasattr(self, 'my_tree'):
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
-        #except:
-        #else:
-            #print("ah ah ahhhh") #En la primer corrida, como my_tree ni add_event existen en la consola se observa la impresion
 
         columns = ("DATEID", "TICKET", "USERID", "EVENT", "ATINCMX2", "ATINCMX3")
-        self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #Originalmente son 5, pero con propositos de desarrollo lo duplique a 10
+        self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
 
         self.my_tree.column("DATEID", anchor= CENTER, width=100)
         self.my_tree.column("TICKET", anchor= CENTER, width=100)
@@ -232,7 +222,6 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         self.my_tree.column("EVENT", anchor= W, width= 600)
         self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
         self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
-        #self.my_tree.column("SOLUTION", anchor= W, width=600)
 
         self.my_tree.heading("DATEID", text="DATEID", anchor=CENTER)
         self.my_tree.heading("TICKET", text="TICKET", anchor=CENTER)
@@ -240,7 +229,6 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
         self.my_tree.heading("ATINCMX2", text="ATENCION MX2", anchor=CENTER)     
         self.my_tree.heading("ATINCMX3", text="ATENCION MX3", anchor=CENTER)     
-        #self.my_tree.heading("SOLUTION", text="SOLUCION", anchor=CENTER)
         self.my_tree.pack()
     
         connection = sqlite3.connect(path)
