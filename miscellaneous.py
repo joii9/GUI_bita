@@ -7,16 +7,9 @@ search_path="C:/Users/Joel/Desktop/GUI_bita/extras/table.html"
 ind="C:/Users/Joel/Desktop/GUI_bita/indicadores.sql"
 
 
-QUERY_TV="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
-                    FROM EVENTS 
-                    LEFT JOIN MARKSMX2 
-                    ON EVENTS.DATEID = MARKSMX2.DATEID 
-                    LEFT JOIN MARKSMX3 
-                    ON EVENTS.DATEID = MARKSMX3.DATEID;"""
-
 text_about= """
 BITACORA DE SISTEMAS 
-Version 1.3.4
+Version 2.3.4
 2024
 
 Sistema Satelital Mexicano
@@ -42,7 +35,53 @@ M. en C. Jorge Tlacaelel Cruz Garcia
 C. America Citlalli Hernandez Vargas
 
 """
+QUERY_TV="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
+                    FROM EVENTS 
+                    LEFT JOIN MARKSMX2 
+                    ON EVENTS.DATEID = MARKSMX2.DATEID 
+                    LEFT JOIN MARKSMX3 
+                    ON EVENTS.DATEID = MARKSMX3.DATEID;"""
 
+Info="""El formato correcto es:
+
+ind: YYYYMMDDII - YYYYMMDDII
+
+YYYY cuatro digitos para el año
+MM dos digitos para el mes
+DD  dos digitos para el día
+II      dos digitos para el identificador
+
+Respeta el espacio depues de ind: y los espacios en el guion medio -
+
+Consulta la información de indicadores en el menú
+Help > Info. indicadores
+"""
+
+Ind_Info="""FORMATO PARA HACER EXPORTACIONES
+
+Desde la barra de BUSQUEDA se pueden exportar los indicadores en lapsos de tiempo. 
+El formato correcto para hacer una exportación es el siguiente:
+
+ind: YYYYMMDDII - YYYYMMDDII
+
+ind: - Indica a la bitacora que solicita INDICADORES:
+YYYY - AÑO
+MM - MES
+DD  - DÍA 
+II     - IDENTIFICADOR
+
+Hay consideraciones que se deben de tener en cuenta cuando se utiliza esta función de la bitacora.
+Para hacer exportaciones es necesario contar con un 
+periodo de tiempo (limite inferior - limite superior).
+Ejemplo: ind: 2023000000 - 2024000000 
+Resultado: Eventos del año 2023
+Ejemplo: ind: 2023010000 - 2023020000 
+Resultado: Eventos del año 2023 mes de enero
+
+Considerando los ejemplos, se pueden variar los lapsos de tiempo que el usuario necesite.
+
+Recuerdatorio: Respeta el espacio depués de ind: y los espacios en el guion medio -
+"""
 
 def generator_dateID(): 
         today=date.today() #Esto es para colocar la fecha en el formato correcto añomesdia.
