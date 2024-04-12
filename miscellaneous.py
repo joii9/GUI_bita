@@ -1,15 +1,25 @@
+import re
 import sqlite3
 
 from datetime import date
 
-path="C:/Users/Joel/Desktop/GUI_bita/IT_database.db"
-search_path="C:/Users/Joel/Desktop/GUI_bita/extras/table.html"
-ind="C:/Users/Joel/Desktop/GUI_bita/indicadores.sql"
+paths= r"paths.txt"
+paths = open(paths, 'r').read()
+ubi = re.split("\n", paths)
+
+aux_path= ubi[0]
+path=aux_path[6:-1]
+
+aux_search= ubi[1]
+search=aux_search[8:-1]
+
+aux_ind= ubi[2]
+ind=aux_ind[5:-1]
 
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 2.0.0
+Version 2.1.0
 2024
 
 Sistema Satelital Mexicano
