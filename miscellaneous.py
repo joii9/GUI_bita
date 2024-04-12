@@ -9,7 +9,7 @@ ind="C:/Users/Joel/Desktop/GUI_bita/indicadores.sql"
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 2.3.4
+Version 2.0.0
 2024
 
 Sistema Satelital Mexicano
@@ -57,7 +57,17 @@ Consulta la información de indicadores en el menú
 Help > Info. indicadores
 """
 
-Ind_Info="""FORMATO PARA HACER EXPORTACIONES
+Ind_Info="""INDICADORES
+En el menú File > Indicadores se exporta un archivo excel
+con todos los eventos en la bitacora de la base de datos.
+
+Nota: Si la bitacora ya cuenta con demasiados registros
+esto podria causar que la aplicación se bloquee ya que
+no se esta delimitando el periodo.
+Para ello se pensó en un formato para delimitar el periodo
+de tiempo que se desea exportar.
+
+FORMATO PARA HACER EXPORTACIONES
 
 Desde la barra de BUSQUEDA se pueden exportar los indicadores en lapsos de tiempo. 
 El formato correcto para hacer una exportación es el siguiente:
