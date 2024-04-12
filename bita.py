@@ -51,7 +51,7 @@ class MainWindow():
         
         subprocess.call(["sqlite3", "IT_database.db", ". read QUERY_TO_EXPORT.sql"], shell=True) 
     
-    def search(self):
+    def create_searchBar(self):
 
         #Aun me falta buscar por DATEID
         
@@ -200,7 +200,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         f = open("extras/table.html", "r")
         print(f.read())
 
-        webbrowser.open(search_path)
+        webbrowser.open(search)
 
     
     def create_title(self, title):
