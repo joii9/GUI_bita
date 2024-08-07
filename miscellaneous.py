@@ -3,18 +3,18 @@ import sqlite3
 
 from datetime import date
 
-paths= r"paths.txt"
-paths = open(paths, 'r').read()
-ubi = re.split("\n", paths)
+file = open("paths.txt", "r")
 
-aux_path= ubi[0]
-path=aux_path[6:-1]
+str_file=file.read()
+#print(file.read())
 
-aux_search= ubi[1]
-search=aux_search[8:-1]
+path= re.findall("[A-Z].*db", str_file)[0]
 
-aux_ind= ubi[2]
-ind=aux_ind[5:-1]
+
+search= re.findall("[A-Z].*html", str_file)[0]
+
+
+ind= re.findall("[A-Z].*sql", str_file)[0]
 
 
 text_about= """
