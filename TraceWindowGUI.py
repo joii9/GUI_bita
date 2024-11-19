@@ -112,7 +112,9 @@ class traceWindow():
         #Conexion con base de datos para comprobar el numero de ticket
         connection = sqlite3.connect(path)
         cursor = connection.cursor()
-        cursor.execute('select * from events where ticket="'+self.selection[0]+'"') #Comprobamos los eventos que hay en events con el numero de ticket correspondiente
+        print("self.selection[1]")
+        print(self.selection[1])
+        cursor.execute('select * from events where ticket="'+self.selection[1]+'"') #Comprobamos los eventos que hay en events con el numero de ticket correspondiente
         #Otro cursor execute ahora para marksmx2
         #rows= cursor.fetchall()
         #print(rows)
@@ -125,7 +127,7 @@ class traceWindow():
         print("Estos son los indicadores de MARKSMX2")
         print(markmx2)
 
-        cursor.execute('select * from marksmx3 where dateid="'+rows+'"') #Comprobaremos si existe un evento en MARKSMX2 con el dateid seleccionado
+        cursor.execute('select * from marksmx3 where dateid="'+rows+'"') #Comprobaremos si existe un evento en MARKSMX3 con el dateid seleccionado
         markmx3=str(cursor.fetchall()).split(",")[0][2:]
         print("Estos son los indicadores de MARKSMX3")
         print(markmx3)
@@ -139,7 +141,7 @@ class traceWindow():
             #print("Hay evento en MARKSMX2")
             elif rows == markmx3:
                 cursor.execute('insert into EVENTS(DATEID, USERID, EVENT, TICKET) values ('+generator_dateID()+',"'+user+'","'+input_trace+'","'+self.selection[1]+'")')
-                cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX2, ATINCMX2, CORRMX2) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
+                cursor.execute('insert into MARKSMX3(DATEID, WEEKLY, SEMESTER, INCMX3, ATINCMX3, CORRMX3) values ('+generator_dateID()+',"0","0","0","'+attention_incstr+'","'+corrective_str+'")')
                 connection.commit()
             #print("Hay evento en MARKSMX3")
             else:
