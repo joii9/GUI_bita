@@ -52,22 +52,15 @@ class MainWindow():
         subprocess.call(["sqlite3", "IT_database.db", ". read QUERY_TO_EXPORT.sql"], shell=True) 
     
     def create_searchBar(self):
-
-        #Aun me falta buscar por DATEID
         
         frame=LabelFrame(self.win, text="Busqueda")
         frame.config(bg = "#D49FFF")
         frame.pack(side="top", anchor= E, padx = 10, pady = 10)
         self.busqueda = Entry(frame) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
-        #self.busqueda.bind("<Button-1>", lambda e: self.busqueda.delete(0, tk.END))
-        #self.busqueda.insert(END, "ind: YYYYMMDDII - YYYYMMDDII")
         self.busqueda.config(width=30)
         self.busqueda.grid(padx = 5)
         add_event= Button(frame, text= "Buscar", command=self.create_tableHTML)
         add_event.grid(row= 0, column= 2, padx = 5, pady = 10)
-
-        buscar=self.busqueda.get()
-        print(buscar)
 
     def create_tableHTML(self):
         
@@ -132,20 +125,14 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
                     f.close()
 
                     subprocess.call(["sqlite3", "IT_database.db", ".read indicadores.sql"], shell=True)
-    
 
-                    
-        #else: Este else deberia estar habilitado, pero debido a un error en la linea #148 se comporta de forma correcta
 
         connection = sqlite3.connect(path)
         cursor = connection.cursor()
-
-
-        #print(f"SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS WHERE TICKET={buscar_texto} OR USERID={buscar_texto} OR EVENT LIKE {texto}")
         cursor.execute(QUERY_SEARCH)
         rows= cursor.fetchall()
-        print(rows)
 
+        print(rows)
         print("LISTA rows[0]")
         print(rows[0])
         
@@ -209,7 +196,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         label.configure(bg="#D49FFF")
         label.pack()
 
-    def create_table(self): #Aquí podria faltar win. 
+    def create_table(self):
 
         if hasattr(self, 'my_tree'):
             self.my_tree.destroy() #Destruye el treeview si existe
@@ -239,17 +226,15 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         cursor = connection.cursor()
 
         
-        cursor.execute(QUERY_TV)
-        #cursor.execute("Select * from prueba")
+        cursor.execute(QUERY_TV) #TreeView
 
         rows= cursor.fetchall()
-        print(rows) #Este print son los primeros que pone en el treeview
+        print(rows)
        
         for row in rows:
             self.my_tree.insert("", 0, values = row)
         connection.close()
         
-        #self.sel=self.my_tree.focus()
         self.my_tree.bind("<Double-1>", self.click) #acuerdate que con () la funcion se ejecuta a la de a webo
         
         self.add_event=tk.Button(text="Añadir Evento", command= lambda:EventWindow(self)) #Antes self.win pero de esta forma solo pasaba la ventana a EventWindow. La forma correcta es solo self para pasar el objeto completo.
