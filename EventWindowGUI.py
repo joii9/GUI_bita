@@ -164,7 +164,7 @@ class EventWindow():
         checkbutton_mx2=tk.Radiobutton(self.event_window.checkbox_frame, variable=self.MX, value=2, indicatoron=0, text="MX2", bg="#949426") #self.mx2 bg="#D49FFF"
         checkbutton_mx2.grid(column=0, row=0, pady=20)
 
-        label_satelites= tk.Label(self.event_window.checkbox_frame, text="    BOTONES", font=("Helvetica", 15), fg="#4D4D4D", bg="#D49FFF")
+        label_satelites= tk.Label(self.event_window.checkbox_frame, text="    Satélite", font=("Helvetica", 15), fg="#4D4D4D", bg="#D49FFF")
         label_satelites.grid(column=1, columnspan=2, row=0, pady= 10)
 
         #label_mx3= tk.Label(self.event_window.checkbox_frame, text="MX3",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
