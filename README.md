@@ -6,7 +6,7 @@ This application born since the need to keep a compendium of the troubles in the
 * There is a function with the title "Busqueda". It is a blank space to introduce text that it will be search in a database to return information about it. 
 * Also the user can find a button with the name "Añadir Evento". The action of the button is open another window where the user can register a new event.
 
-![image](./extras/Images_readme/main_window.jpg)
+![image](./extras/Images_readme/main_window.JPG)
 
 ## Event_window
 
