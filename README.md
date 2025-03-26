@@ -7,7 +7,7 @@ This application born since the need to keep a compendium of the problems in the
 * Also the user can find a button with the name "Añadir Evento". The action of the button is open another window where the user can register a new event.
 * A bar menu where the user can find the section "Archivo" with the function "Indicadores".
 
-![image](./extras/Images_readme/indicadores.JPG)
+![image](./extras/Images_readme/indicadores.jpg)
 
 ## Event_window
 
@@ -61,4 +61,4 @@ For example. If the user wants export all the events in the year 2024 in a excel
 
 And the results is an excel file with only the events registered in the year 2024.
 
-![image](./extras/Images_readme/exportations_2024.JPG)
+![image](./extras/Images_readme/exportations_2024.jpg)
