@@ -15,7 +15,7 @@ ind= re.findall("[A-Z].*sql", str_file)[0]
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 2.2.1
+Version 2.3.0
 2024
 
 Sistema Satelital Mexicano
