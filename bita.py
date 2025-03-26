@@ -31,17 +31,17 @@ class MainWindow():
 
         #Create a menu item
         file_menu = Menu(my_menu, tearoff=0)
-        my_menu.add_cascade(label="File", menu=file_menu)
+        my_menu.add_cascade(label="Archivo", menu=file_menu)
         file_menu.add_command(label="Indicadores", command= self.exporting)
         file_menu.add_separator()
-        file_menu.add_command(label= "Exit...", command=self.win.quit)
+        file_menu.add_command(label= "Salir...", command=self.win.quit)
 
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
-        my_menu.add_cascade(label="Help", menu=about_menu, command=self.win.quit)
+        my_menu.add_cascade(label="Ayuda", menu=about_menu, command=self.win.quit)
         about_menu.add_command(label="Info. Indicadores", command=self.ind_info)
         about_menu.add_separator()
-        about_menu.add_command(label="About", command=AboutWindow) #About window
+        about_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
     
     def ind_info (self):
 
