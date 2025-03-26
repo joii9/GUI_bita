@@ -64,7 +64,7 @@ Help > Info. indicadores
 """
 
 Ind_Info="""INDICADORES
-En el menú File > Indicadores se exporta un archivo excel
+En el menú Archivo > Indicadores se exporta un archivo excel
 con todos los eventos en la bitacora de la base de datos.
 
 Nota: Si la bitacora ya cuenta con demasiados registros
