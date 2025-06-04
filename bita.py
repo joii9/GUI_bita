@@ -32,25 +32,38 @@ class MainWindow():
         #Create a menu item
         file_menu = Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label="Archivo", menu=file_menu)
-        file_menu.add_command(label="Indicadores", command= self.exporting)
-        file_menu.add_separator()
         file_menu.add_command(label= "Salir...", command=self.win.quit)
 
+        #Create a Documentation option
+        documentation_menu= Menu(my_menu, tearoff=0)
+        my_menu.add_cascade(label="Documentación", menu=documentation_menu)
+        documentation_menu.add_command(label="FSS", command= fss)
+        documentation_menu.add_command(label="MSS", command= mss)
+        documentation_menu.add_command(label="Epoch T&C", command= epoch_t_and_c)
+        documentation_menu.add_command(label="Epoch User Training", command= epoch_user_training)
+        documentation_menu.add_command(label="Epoch Maintenance Training", command= epoch_maintenance_training)
+        documentation_menu.add_command(label="Ares", command= ares)
+        documentation_menu.add_command(label="Servidores", command= servidores)
+        documentation_menu.add_command(label="Archive Manager", command= archive_manager)
+        documentation_menu.add_command(label="Task Initiator", command= task_initiator)
+        documentation_menu.add_command(label="System Documents", command= system_documents)
+        documentation_menu.add_command(label="Compass", command=compass)
+        documentation_menu.add_command(label="Encriptores", command= encriptores)
+        documentation_menu.add_command(label="3com", command= three_com)
+
+        #Create a Export item
+        export_menu= Menu(my_menu, tearoff=0)
+        my_menu.add_cascade(label="Exportar", menu=export_menu)
+        export_menu.add_command(label="Indicadores", command= exporting)
+        export_menu.add_separator()
+        export_menu.add_command(label="Info. Indicadores", command=ind_info)
+        
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label="Ayuda", menu=about_menu, command=self.win.quit)
-        about_menu.add_command(label="Info. Indicadores", command=self.ind_info)
-        about_menu.add_separator()
         about_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
-    
-    def ind_info (self):
 
-        messagebox.showinfo("INFORMACIÓN DE INDICADORES", Ind_Info)
 
-    def exporting (self):
-        
-        subprocess.call(["sqlite3", "IT_database.db", ". read QUERY_TO_EXPORT.sql"], shell=True) 
-    
     def create_searchBar(self):
         
         frame=LabelFrame(self.win, text="Busqueda")
