@@ -1,6 +1,8 @@
 import re
 import sqlite3
+import subprocess
 
+from tkinter import messagebox
 from datetime import date
 
 file = open("paths.txt", "r")
@@ -15,7 +17,7 @@ ind= re.findall("[A-Z].*sql", str_file)[0]
 
 text_about= """
 BITACORA DE SISTEMAS 
-Version 2.3.0
+Version 2.4.0
 2024
 
 Sistema Satelital Mexicano
@@ -125,3 +127,75 @@ def generator_dateID():
             dateid=str(check+1)
             print(dateid)
             return dateid
+
+
+def exporting ():
+        subprocess.call(["sqlite3", "IT_database.db", ". read QUERY_TO_EXPORT.sql"], shell=True)
+
+def ind_info ():
+        messagebox.showinfo("INFORMACIÓN DE INDICADORES", Ind_Info)
+
+
+################################################## FSS #############################################
+def fss():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\Subsystem Engineering Training\"')
+
+
+####################################### MSS ###########################################################
+def mss():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\Subsystem Engineering System-MSS"')
+
+
+################################# EPOCH T&C #########################################################
+def epoch_t_and_c():
+     return subprocess.Popen(r'explorer Z:\Documentation Library\ISI\EPOCH\EPOCH T&C Server 4.12.3.1\"')
+
+
+################################# EPOCH USER TRAINING ################################################
+def epoch_user_training():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\ISI\MEXSAT\Training\2012-04 EPOCH User Training\slides"')
+
+
+############################ EPOCH MAINTENANCE TRAINING ###############################################
+def epoch_maintenance_training():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\ISI\MEXSAT\Training\2012-05 EPOCH Maintenance Training"')
+
+
+#################################### ARES ###########################################################
+def ares():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\ISI\EPOCH\ARES 4.12.3.0"')
+
+
+################################### SERVIDORES #####################################################
+def servidores():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\Documentacion Servidores"')
+
+
+########################################## ARCHIVE MANAGER ########################################################################
+def archive_manager():
+     return subprocess.Popen(r"Z:\Documentation Library\ISI\EPOCH\Archive Manager 4.12.0\Archive Manager 4.12.3.0.pdf",shell=True)
+
+
+############################### TASK INITIATOR ########################################################
+def task_initiator():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\ISI\EPOCH\Task Initiator 4.12.0"')
+
+
+############################ SYSTEM DOCUMENTS ###########################################################
+def system_documents():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\ISI\MEXSAT\System Documents"')
+
+
+########################################## COMPASS ##################################################
+def compass():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\Compass"')
+
+
+############################# ENCRIPTORES #########################################################################
+def encriptores():
+     return subprocess.Popen(r"Z:\Documentation Library\Encriptores\Centurion encryptor key loading.pdf",shell=True)
+
+
+######################################### 3COM #####################################################
+def three_com():
+     return subprocess.Popen(r'explorer "Z:\Documentation Library\3com"')
