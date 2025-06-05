@@ -21,7 +21,7 @@ class MainWindow():
         self.win= tkinter.Tk()
         self.win.title("BITACORA DE SISTEMAS")
         self.win.configure(bg="#D49FFF")
-        self.win.geometry("1200x300")
+        self.win.geometry("1000x300")
         
     
     def bar_menu(self):
@@ -215,23 +215,29 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
 
-        columns = ("DATEID", "TICKET", "USERID", "EVENT", "ATINCMX2", "ATINCMX3")
+        columns = ("DATEID", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
         self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
 
         self.my_tree.column("DATEID", anchor= CENTER, width=100)
         self.my_tree.column("TICKET", anchor= CENTER, width=100)
         self.my_tree.column("USERID", anchor= CENTER, width=100) 
         self.my_tree.column("EVENT", anchor= W, width= 600)
-        self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
-        self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
+        #self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
+        #self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
 
         self.my_tree.heading("DATEID", text="DATEID", anchor=CENTER)
         self.my_tree.heading("TICKET", text="TICKET", anchor=CENTER)
         self.my_tree.heading("USERID", text="USUARIO", anchor=CENTER)
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
-        self.my_tree.heading("ATINCMX2", text="ATENCION MX2", anchor=CENTER)     
-        self.my_tree.heading("ATINCMX3", text="ATENCION MX3", anchor=CENTER)     
+        #self.my_tree.heading("ATINCMX2", text="ATENCION MX2", anchor=CENTER)     
+        #self.my_tree.heading("ATINCMX3", text="ATENCION MX3", anchor=CENTER)     
         self.my_tree.pack()
+
+        #Create striped row tags
+        self.my_tree.tag_configure('None', background="White")
+        self.my_tree.tag_configure('MX2', background="#949426")
+        self.my_tree.tag_configure('MX3', background="#408080")
+        self.my_tree.tag_configure('Red', background="Red")
     
         connection = sqlite3.connect(path)
 
@@ -245,7 +251,14 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         print(rows)
        
         for row in rows:
-            self.my_tree.insert("", 0, values = row)
+            if row[-2] == None and row[-1] == None:
+                self.my_tree.insert("", 0, values = row, tag='None')
+            elif row[-2]:
+                self.my_tree.insert("", 0, values = row, tag='MX2')
+            elif row[-1]:
+                self.my_tree.insert("", 0, values = row, tag='MX3')
+            else:
+                self.my_tree.insert("", 0, values = row, tag='Red')
         connection.close()
         
         self.my_tree.bind("<Double-1>", self.click) #acuerdate que con () la funcion se ejecuta a la de a webo
