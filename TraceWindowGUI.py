@@ -28,18 +28,28 @@ class traceWindow():
     
     def put_label(self):#,selection)
         
+
+        print("This is self.seleccion "+str(self.selection))
+        
+        print(self.selection[0])
+
         label= tk.Label(self.trace_window, text=self.selection[1], font=("Helvetica", 12), fg="#4D4D4D")
-        #print(selection[0])
+        print(self.selection[1])
         label.configure(bg="#D49FFF")
         label.pack()
 
         label1= tk.Label(self.trace_window, text=self.selection[2], font=("Helvetica", 12), fg="#4D4D4D")
+        print(self.selection[2])
         label1.configure(bg="#D49FFF")
         label1.pack()
 
         label2= tk.Label(self.trace_window, text=self.selection[3], font=("Helvetica", 12), fg="#4D4D4D", wraplength=480, justify=LEFT)
+        print(self.selection[3])
         label2.configure(bg="#D49FFF")
         label2.pack()
+
+        print(self.selection[4])
+        print(self.selection[5])
 
         self.user= StringVar(self.trace_window)
         self.user.set("Usuario")
@@ -77,7 +87,6 @@ class traceWindow():
             self.message_user.destroy()
 
         if user == "Usuario":
-            print("hey")
             self.message_user= Message(self.trace_window, text="Primero debes seleccionar un usuario", bg="red", width=1000)  
             self.message_user.pack()
         elif input_trace == "":
@@ -88,6 +97,8 @@ class traceWindow():
         return False
     
     def update_ticket(self):
+
+        print("Click de ACTUALIZAR")
         
         #We get the value of user
         user=self.user.get()
@@ -101,25 +112,27 @@ class traceWindow():
         #We get the value of checkbutton
         attention_inc=self.attention_inc.get()
         attention_incstr=str(attention_inc) #This is for marks either for one or another
-        print("Checkbutton " +attention_incstr)
+        print("Atención a Incidencia " +attention_incstr)
 
         corrective=self.corrective.get()
         corrective_str=str(corrective)
-        #print(corrective_str)
+        print("Correctivo " +corrective_str)
 
-        
 
         #Conexion con base de datos para comprobar el numero de ticket
         connection = sqlite3.connect(path)
         cursor = connection.cursor()
-        print("self.selection[1]")
-        print(self.selection[1])
+        print("self.selection[1] " +self.selection[1])
+
         cursor.execute('select * from events where ticket="'+self.selection[1]+'"') #Comprobamos los eventos que hay en events con el numero de ticket correspondiente
         #Otro cursor execute ahora para marksmx2
-        #rows= cursor.fetchall()
-        #print(rows)
-        rows=str(cursor.fetchall()).split(",")[0][2:]
-        print("Rows= " +rows) #Mostramos el dateid que corresponda al ticket seleccionado
+        rows= cursor.fetchall()
+        print("rows")
+        print(rows)
+
+        print("rows= str(cursor.fetchall()).split(",")[0][2:]") #Mostramos el dateid que corresponda al ticket seleccionado
+        rows=str(rows).split(",")[0][2:]
+        print(rows)
         
 
         cursor.execute('select * from marksmx2 where dateid="'+rows+'"') #Comprobaremos si existe un evento en MARKSMX2 con el dateid seleccionado
