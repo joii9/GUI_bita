@@ -78,16 +78,16 @@ class MainWindow():
     def create_tableHTML(self):
         
         buscar=self.busqueda.get()
-        print(type(buscar))
+        #print(type(buscar))
 
         try:
             data=int(buscar)
             data_plus= data+1
-            print(data_plus)
+            #print(data_plus)
             under=buscar[::-1].zfill(10)[::-1]
-            print(under)
+            #print(under)
             top=str(data_plus)[::-1].zfill(10)[::-1]
-            print(top)
+            #print(top)
             texto=f'"%{buscar}%"'
             QUERY_SEARCH=f"""
             SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
@@ -95,9 +95,9 @@ class MainWindow():
             """ 
         except:
             buscar_texto=f'"{buscar}"'
-            print(buscar_texto)
+            #print(buscar_texto)
             texto=f'"%{buscar}%"'
-            print(texto)
+            #print(texto)
             QUERY_SEARCH= f"""
             SELECT DATEID, TICKET, USERID, EVENT FROM EVENTS
             WHERE TICKET={buscar_texto}
@@ -108,15 +108,15 @@ class MainWindow():
         if buscar[0:4] == "ind:" and len(buscar) < 28:
             messagebox.showerror("Error de formato", Info)
         elif buscar[:-24] == "ind:" and len(buscar) == 28:
-            print("Estas dentro del if")    
+            #print("Estas dentro del if")    
             if len(buscar[5:-13]) == 10:
-                print("Se trata del inicio de los indicadores ")
+                #print("Se trata del inicio de los indicadores ")
                 inicio=buscar[5:-13]
-                print(inicio)        
+                #print(inicio)        
                 if len(buscar[-10:]) == 10:
-                    print("Se trata del fin de los indicadores")
+                    #print("Se trata del fin de los indicadores")
                     fin=buscar[-10:]
-                    print(fin)
+                    #print(fin)
 
                     connection = sqlite3.connect(path)
                     cursor = connection.cursor()
@@ -145,9 +145,9 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         cursor.execute(QUERY_SEARCH)
         rows= cursor.fetchall()
 
-        print(rows)
-        print("LISTA rows[0]")
-        print(rows[0])
+        #print(rows)
+        #print("LISTA rows[0]")
+        #print(rows[0])
         
 
         connection.close()
@@ -180,7 +180,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
                     <td align="left">"""+rows[3]+"""</td>
                 </tr>
                 """
-            print(table)
+            #print(table)
             return table
 
         end= "</table>"
@@ -190,15 +190,15 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
             text+=writing_rows(row)
             #print(text)
 
-        print("INICIO")
-        print(head+text+end)
+        #print("INICIO")
+        #print(head+text+end)
 
         f = open("extras/table.html", "w")
         f.write(head+text+end)
         
 
         f = open("extras/table.html", "r")
-        print(f.read())
+        #print(f.read())
 
         webbrowser.open(search)
 
@@ -248,14 +248,22 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         cursor.execute(QUERY_TV) #TreeView
 
         rows= cursor.fetchall()
-        print(rows)
+        #print(rows)
        
         for row in rows:
+            #print(row)
             if row[-2] == None and row[-1] == None:
+                #print("Primer IF")
+                #print(row[-2])
+                #print(row[-1])
                 self.my_tree.insert("", 0, values = row, tag='None')
             elif row[-2]:
+                #print("Segundo IF")
+                #print(row[-2])
                 self.my_tree.insert("", 0, values = row, tag='MX2')
             elif row[-1]:
+                #print("Tercer IF")
+                #print(row[-1])
                 self.my_tree.insert("", 0, values = row, tag='MX3')
             else:
                 self.my_tree.insert("", 0, values = row, tag='Red')
@@ -270,7 +278,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
 
         #trace_Window=traceWindow(self)
         self.selection=self.my_tree.focus()
-        print(self.selection)
+        #print(self.selection)
         #traceWindow(self)
         self.selection=traceWindow(self.my_tree.item(self.selection, "values") ,self)#[0]
         #variable=traceWindow(arg1,arg2)#arg1=selection, arg2=MainWindow    
