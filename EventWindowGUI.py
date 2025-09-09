@@ -61,6 +61,18 @@ class EventWindow():
         user= str(self.user.get())
         input_event= str(self.event_text.get("1.0","end-1c"))
         incidence=self.incidence.get()
+        
+
+        MX=self.MX.get()
+        print(MX)
+        
+        daily=self.daily.get()
+        weekly=self.weekly.get()
+        semester=self.semester.get()
+        corrective=self.corrective.get()
+        incidence=self.incidence.get()
+        attention_inc=self.attention_inc.get()
+
         input_ticket= self.ticket.get()
 
         if hasattr(self, 'message_user'):
@@ -71,6 +83,8 @@ class EventWindow():
             cursor = connection.cursor()
             cursor.execute('SELECT ticket from events WHERE ticket="'+input_ticket+'"')
             ticket_equals=cursor.fetchall()
+            print("YOU ARE IN VALIDATION FUNCTION")
+            print(ticket_equals)
         else:
             ticket_equals=[]
 
@@ -80,14 +94,21 @@ class EventWindow():
         elif input_event == "":
             self.message_user= Message(self.logging_frame, text="¿Cual es el evento?", bg="red", width=1000)
             self.message_user.grid(row=0, column=3)
-        elif incidence == 1 and input_ticket == "" :
-            self.message_user= Message(self.logging_frame, text="¿Cual es el #-TICKET?", bg="red", width=1000)
-            self.message_user.grid(row=0, column=3)
-        elif len(ticket_equals)>0: 
-            self.message_user= Message(self.logging_frame, text="#-TICKET existente. VERIFICA", bg="red", width=1000)
-            self.message_user.grid(row=0, column=3)
+        elif MX == 2 or MX == 3:
+            if daily == 0 and weekly == 0 and semester == 0 and incidence == 0 and corrective == 0 and attention_inc == 0:
+                self.message_user= Message(self.logging_frame, text="Tienes que seleccionar el tipo de evento", bg="red", width=1000)
+                self.message_user.grid(row=0, column=3)
+            elif incidence == 1 and input_ticket == "" :
+                self.message_user= Message(self.logging_frame, text="¿Cual es el #-TICKET?", bg="red", width=1000)
+                self.message_user.grid(row=0, column=3)
+            elif len(ticket_equals)>0: 
+                self.message_user= Message(self.logging_frame, text="#-TICKET existente. VERIFICA", bg="red", width=1000)
+                self.message_user.grid(row=0, column=3)
+            else:
+                return True
         else:
             return True
+        
         return False
 
     def get_input(self):
@@ -130,6 +151,7 @@ class EventWindow():
 
         input_ticket= self.ticket.get()
         print(input_ticket)
+
         if self.validation() == True:
             if MX == 2:
                 connection = sqlite3.connect(path)
