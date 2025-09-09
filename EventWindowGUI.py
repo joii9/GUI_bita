@@ -74,6 +74,7 @@ class EventWindow():
         attention_inc=self.attention_inc.get()
 
         input_ticket= self.ticket.get()
+        input_ticket= input_ticket.replace(" ","")
 
         if hasattr(self, 'message_user'):
             self.message_user.destroy()
@@ -150,6 +151,7 @@ class EventWindow():
         attention_incstr=str(attention_inc)
 
         input_ticket= self.ticket.get()
+        input_ticket= input_ticket.replace(" ","")
         print(input_ticket)
 
         if self.validation() == True:
