@@ -3,7 +3,7 @@
 This application was born because of the need to keep a compendium of the problems in the Satellite Control Center.
 
 * The application has the capability to show the last five problems and solutions in a table in the main window named "Bitacora de Sistemas". A row can be colored in white, red, green or golden. White, if the event does not belong to any satellite. Red, if the event has not been solved It does not matter which satellite it is. Green, if the event has been solved for MX3 satellite. Golden, if the event has been solved for MX2 satellite.
-* There is a blank space with the title "Busqueda" to introduce text that will be searched search in a database to return information about it. 
+* There is a blank space with the title "Busqueda" to introduce text that will be searched in a database to return information about it. 
 * Also the user can find a button with the name "Añadir Evento". The action of the button is to open another window where the user can register a new event.
 * There is a bar menu where the user can find the section "Archivo", "Documentación", "Exportar" and "Ayuda". "Archivo" just has the option to close the window. "Documentación" has many sections with the documents about each subsystem. "Exportar" has the section "Indicadores" and "Info. Indicadores". Lastly "Ayuda" has the section "Acerca de...".
 
