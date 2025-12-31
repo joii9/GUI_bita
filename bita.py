@@ -78,7 +78,15 @@ class MainWindow():
     def create_tableHTML(self):
         
         buscar=self.busqueda.get()
-        #print(type(buscar))
+        print(buscar)
+
+        if re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar):
+            buscar=re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar)
+            print(buscar)
+            buscar="".join(buscar[0])
+            buscar="20"+buscar
+            #print("buscar " +buscar)
+
 
         try:
             data=int(buscar)
@@ -215,17 +223,17 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
 
-        columns = ("DATEID", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
+        columns = ("DATE.(ID)", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
         self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
 
-        self.my_tree.column("DATEID", anchor= CENTER, width=100)
+        self.my_tree.column("DATE.(ID)", anchor= CENTER, width=100)
         self.my_tree.column("TICKET", anchor= CENTER, width=100)
         self.my_tree.column("USERID", anchor= CENTER, width=100) 
         self.my_tree.column("EVENT", anchor= W, width= 600)
         #self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
         #self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
 
-        self.my_tree.heading("DATEID", text="DATEID", anchor=CENTER)
+        self.my_tree.heading("DATE.(ID)", text="DATE.(ID)", anchor=CENTER)
         self.my_tree.heading("TICKET", text="TICKET", anchor=CENTER)
         self.my_tree.heading("USERID", text="USUARIO", anchor=CENTER)
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
@@ -251,19 +259,21 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         #print(rows)
        
         for row in rows:
-            #print(row)
+            aux=str(row[0])
+            row=(f"{aux[2:4]}.{aux[4:6]}.{aux[6:8]}({aux[8:]})",)+row[1:]
             if row[-2] == None and row[-1] == None:
-                #print("Primer IF")
-                #print(row[-2])
-                #print(row[-1])
+                print("Primer IF")
+                print(row)
+                print(row[-2])
+                print(row[-1])
                 self.my_tree.insert("", 0, values = row, tag='None')
             elif row[-2]:
-                #print("Segundo IF")
-                #print(row[-2])
+                print("Segundo IF")
+                print(row[-2])
                 self.my_tree.insert("", 0, values = row, tag='MX2')
             elif row[-1]:
-                #print("Tercer IF")
-                #print(row[-1])
+                print("Tercer IF")
+                print(row[-1])
                 self.my_tree.insert("", 0, values = row, tag='MX3')
             else:
                 self.my_tree.insert("", 0, values = row, tag='Red')
