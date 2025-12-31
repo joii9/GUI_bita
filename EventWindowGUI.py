@@ -32,10 +32,11 @@ class EventWindow():
         self.logging_frame= tk.Frame(self.event_window, bg="#D49FFF", padx=10, pady=10)
         self.logging_frame.pack(side="top", fill="both") #expand=True,
 
-        label= tk.Label(self.logging_frame, text="Fecha-ID:", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D")
+        label= tk.Label(self.logging_frame, text="DATE.(ID):", font=("Helvetica", 14), bg="#D49FFF", fg="#4D4D4D")
         label.grid(row= 0, column= 0)
 
-        label_date= tk.Label(self.logging_frame, text= generator_dateID(), font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") 
+        dateid_view=generator_dateID()
+        label_date= tk.Label(self.logging_frame, text= dateid_view[2:4]+"."+dateid_view[4:6]+"."+dateid_view[6:8]+"("+dateid_view[8:10]+")", font=("Helvetica", 15), bg="#D49FFF", fg="#4D4D4D") 
         label_date.grid(row=0, column=1)
 
         self.user= StringVar(self.logging_frame)
@@ -201,7 +202,6 @@ class EventWindow():
             self.event_window.destroy() #Aquí destruimos event_window
             #self.win.deiconify() #Aparecemos al padre, self.win
             self.main_window.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
-        
         
         
     
