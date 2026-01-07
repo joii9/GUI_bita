@@ -61,12 +61,16 @@ class MainWindow():
         #Create an about option
         about_menu= Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label="Ayuda", menu=about_menu, command=self.win.quit)
+        about_menu.add_command(label="Visualización de eventos", command=TV_info) #About window
+        about_menu.add_command(label="Busquedas", command=Search_info) #About window
+        about_menu.add_separator()
         about_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
+        
 
 
     def create_searchBar(self):
         
-        frame=LabelFrame(self.win, text="Busqueda")
+        frame=LabelFrame(self.win, text="Búsqueda")
         frame.config(bg = "#D49FFF")
         frame.pack(side="top", anchor= E, padx = 10, pady = 10)
         self.busqueda = Entry(frame) #Invocamos la función entry_box dentro de la funcion busqueda, en el frame. Tener cuidado con el nombre de las variables de los frames, ya que en los argumentos del frame lo colocara en frame correspondiente
@@ -223,17 +227,17 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
 
-        columns = ("DATE.(ID)", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
+        columns = ("YY.MM.DD(ID)", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
         self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
 
-        self.my_tree.column("DATE.(ID)", anchor= CENTER, width=100)
+        self.my_tree.column("YY.MM.DD(ID)", anchor= CENTER, width=100)
         self.my_tree.column("TICKET", anchor= CENTER, width=100)
         self.my_tree.column("USERID", anchor= CENTER, width=100) 
         self.my_tree.column("EVENT", anchor= W, width= 600)
         #self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
         #self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
 
-        self.my_tree.heading("DATE.(ID)", text="DATE.(ID)", anchor=CENTER)
+        self.my_tree.heading("YY.MM.DD(ID)", text="YY.MM.DD(ID)", anchor=CENTER)
         self.my_tree.heading("TICKET", text="TICKET", anchor=CENTER)
         self.my_tree.heading("USERID", text="USUARIO", anchor=CENTER)
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
