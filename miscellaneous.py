@@ -133,7 +133,7 @@ Dado que la visualización de eventos en la tabla principal está limitada. El u
 Si el usuario conoce el identificador completo, como lo es:
 YY.MM.DD(ID) 
 También se puede buscar por el formato completo de identificador. El cual es:
-YYYYMMDDID
+YYYYMMDDII
 Si el usuario desease visualizar todos los eventos registrados en la bitácora solo tiene que dar click en el botón de Buscar con el campo de búsqueda en blanco.
 """
 
