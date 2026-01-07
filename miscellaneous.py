@@ -16,15 +16,15 @@ ind= re.findall("[A-Z].*sql", str_file)[0]
 
 
 text_about= """
-BITACORA DE SISTEMAS 
-Version 1.10.0
+BITÁCORA DE SISTEMAS 
+Versión 1.10.0
 2024
 
 Sistema Satelital Mexicano
 MEXSAT
 
-Gerencia del Centro de Control Satelital Iztpalapa
-Cordinación de Sistemas
+Gerencia del Centro de Control Satelital Iztapalapa
+Coordinación de Sistemas
 
 
 DESARROLLO
@@ -34,22 +34,15 @@ Ing. Joel Carbajal Muñoz
 
 AGRADECIMIENTOS
 
-Ing. Andrea Mijaru Sanchez Hernandez
+Ing. Andrea Mijaru Sánchez Hernández
 
 Ing. Roberto Cadena Vega
 
-M. en C. Jorge Tlacaelel Cruz Garcia
+M. en C. Jorge Tlacaelel Cruz García
 
-C. America Citlalli Hernandez Vargas
+América Citlalli Hernández Vargas
 
 """
-QUERY_TV="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
-                    FROM EVENTS 
-                    LEFT JOIN MARKSMX2 
-                    ON EVENTS.DATEID = MARKSMX2.DATEID 
-                    LEFT JOIN MARKSMX3 
-                    ON EVENTS.DATEID = MARKSMX3.DATEID;"""
-
 Info="""El formato correcto es:
 
 ind: YYYYMMDDII - YYYYMMDDII
@@ -66,29 +59,29 @@ Help > Info. indicadores
 """
 
 Ind_Info="""INDICADORES
-En el menú Archivo > Indicadores se exporta un archivo excel
-con todos los eventos en la bitacora de la base de datos.
+En el menú Archivo > Indicadores se exporta un archivo Excel
+con todos los eventos en la bitácora de la base de datos.
 
-Nota: Si la bitacora ya cuenta con demasiados registros
-esto podria causar que la aplicación se bloquee ya que
-no se esta delimitando el periodo.
+Nota: Si la bitácora ya cuenta con demasiados registros
+esto podría causar que la aplicación se bloquee, ya que
+no se está delimitando el periodo.
 Para ello se pensó en un formato para delimitar el periodo
 de tiempo que se desea exportar.
 
 FORMATO PARA HACER EXPORTACIONES
 
-Desde la barra de BUSQUEDA se pueden exportar los indicadores en lapsos de tiempo. 
+Desde la barra de Búsqueda se pueden exportar los indicadores en lapsos de tiempo. 
 El formato correcto para hacer una exportación es el siguiente:
 
 ind: YYYYMMDDII - YYYYMMDDII
 
-ind: - Indica a la bitacora que solicita INDICADORES:
+ind: - Indica a la bitácora que solicita INDICADORES:
 YYYY - AÑO
 MM - MES
 DD  - DÍA 
 II     - IDENTIFICADOR
 
-Hay consideraciones que se deben de tener en cuenta cuando se utiliza esta función de la bitacora.
+Hay consideraciones que se deben de tener en cuenta cuando se utiliza esta función de la bitácora.
 Para hacer exportaciones es necesario contar con un 
 periodo de tiempo (limite inferior - limite superior).
 Ejemplo: ind: 2023000000 - 2024000000 
@@ -98,7 +91,50 @@ Resultado: Eventos del año 2023 mes de enero
 
 Considerando los ejemplos, se pueden variar los lapsos de tiempo que el usuario necesite.
 
-Recuerdatorio: Respeta el espacio depués de ind: y los espacios en el guion medio -
+Recuerdatorio: Respeta el espacio después de ind: y los espacios en el guion medio -
+"""
+
+View_TV= """VISUALIZACIÓN
+En la tabla principal se puede observar los cinco eventos más recientes.
+
+1.er Columna - Fecha en formato YY.MM.DD(ID)
+        Y - Year
+      M - Month
+       D - Day
+    (ID) - Identifier per day
+Lo que significa que el identificador incrementará en un mismo día.
+Reiniciando el identificador en un día diferente.
+
+2.da Columna - Ticket en formato ###-YY 
+     ### - Número consecutivo, completando con 0 (ceros) 
+               las posiciones a la izquierda. Ejemplo para el primer 
+               ticket del año 001.
+        YY - Year. Dos posiciones para el año en curso 26 = 2026.
+               El ticket es asignado por el usuario y es 
+               indispensable que el usuario sepa cuál fue 
+               el último número de ticket utilizado para asignar él 
+               consecutivo a la nueva incidencia.
+
+3.er Columna - Usuario
+El usuario es seleccionado desde la ventana de Eventos. El cual cuenta con tres opciones:
+     -Coordinaror
+     -Analista
+     -Invitado
+
+4.a Columna - Evento
+Breve visualización del evento
+
+Si el usuario desea visualizar más eventos solo tiene que localizarse dentro de la tabla y "scrollear" hacia abajo. Los eventos en la tabla principal cubren el año en curso y el anterior.
+Todos los eventos se encuentran en la base de datos de sistemas.
+"""
+
+Search= """Para realizar una búsqueda se necesita escribir una palabra clave en la barra de Búsqueda de la ventana principal.
+Dado que la visualización de eventos en la tabla principal está limitada. El usuario puede hacer búsquedas por año directamente en la barra de Búsqueda.
+Si el usuario conoce el identificador completo, como lo es:
+YY.MM.DD(ID) 
+También se puede buscar por el formato completo de identificador. El cual es:
+YYYYMMDDID
+Si el usuario desease visualizar todos los eventos registrados en la bitácora solo tiene que dar click en el botón de Buscar con el campo de búsqueda en blanco.
 """
 
 def generator_dateID(): 
@@ -127,6 +163,16 @@ def generator_dateID():
             dateid=str(check+1)
             print(dateid)
             return dateid
+     
+#print(str(int(generator_dateID()[:4])-1)+"000000")
+QUERY_TV="""   SELECT EVENTS.DATEID, EVENTS.TICKET, EVENTS.USERID, EVENTS.EVENT, MARKSMX2.ATINCMX2, MARKSMX3.ATINCMX3 
+                    FROM EVENTS
+                    LEFT JOIN MARKSMX2 
+                    ON EVENTS.DATEID = MARKSMX2.DATEID 
+                    LEFT JOIN MARKSMX3 
+                    ON EVENTS.DATEID = MARKSMX3.DATEID
+                    WHERE EVENTS.DATEID >="""+str(int(generator_dateID()[:4])-1)+"000000"";"  #<-- Delimitar los años en el treeview
+
 
 
 def exporting ():
@@ -199,3 +245,13 @@ def encriptores():
 ######################################### 3COM #####################################################
 def three_com():
      return subprocess.Popen(r'explorer "Z:\Documentation Library\3com"')
+
+
+##################################### Tree View Info ########################################################
+def TV_info ():
+        messagebox.showinfo("Visualización de eventos en la tabla principal", View_TV)
+
+
+##################################### Search ########################################################
+def Search_info ():
+        messagebox.showinfo("Busquedas", Search)
