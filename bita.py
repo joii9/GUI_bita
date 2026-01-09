@@ -82,14 +82,41 @@ class MainWindow():
     def create_tableHTML(self):
         
         buscar=self.busqueda.get()
-        print(buscar)
+        print("Buscar: " +buscar)
 
         if re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar):
+            print("Identificador completo")
             buscar=re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar)
             print(buscar)
             buscar="".join(buscar[0])
             buscar="20"+buscar
-            #print("buscar " +buscar)
+            print("buscar " +buscar)
+        elif len(buscar) <= 8 and re.findall(r"\d{2}\.+", buscar): #"\.+"
+            print("En el elif")
+            buscar= re.findall(r"(\d{2})", buscar)
+            print(buscar)
+            if len(buscar) == 1:
+                print("Solo el año")
+                buscar= "20"+"".join(buscar)
+                print("20"+buscar)
+            if len(buscar) == 2:
+                print("Año y mes")
+                buscar= "20"+"".join(buscar)
+                print("20"+buscar)
+            if len(buscar) == 3:
+                print("Año, mes y día")
+                buscar= "20"+"".join(buscar)
+                print(buscar)
+                
+
+        #if re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar):
+        #    buscar=re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar)
+        #    print(buscar)
+        #    buscar="".join(buscar[0])
+        #    buscar="20"+buscar
+        #    #print("buscar " +buscar)
+        #
+        ######## Aquí ira otra opción de buscar #################################
 
 
         try:
