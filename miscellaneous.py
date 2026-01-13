@@ -97,34 +97,27 @@ Recuerdatorio: Respeta el espacio después de ind: y los espacios en el guion me
 View_TV= """VISUALIZACIÓN
 En la tabla principal se puede observar los cinco eventos más recientes.
 
-1.er Columna - Fecha en formato YY.MM.DD(ID)
-        Y - Year
-      M - Month
-       D - Day
-    (ID) - Identifier per day
+1.er Columna - Identificador, es la fecha en formato YY.MM.DD(ID)
+     Y     - Year
+     M    - Month
+     D    - Day
+     (ID) - Identifier per day
 Lo que significa que el identificador incrementará en un mismo día.
 Reiniciando el identificador en un día diferente.
 
-2.da Columna - Ticket en formato ###-YY 
-     ### - Número consecutivo, completando con 0 (ceros) 
-               las posiciones a la izquierda. Ejemplo para el primer 
-               ticket del año 001.
-        YY - Year. Dos posiciones para el año en curso 26 = 2026.
-               El ticket es asignado por el usuario y es 
-               indispensable que el usuario sepa cuál fue 
-               el último número de ticket utilizado para asignar él 
-               consecutivo a la nueva incidencia.
+2.da Columna - Ticket, en formato ###-YY 
+     ### - Número consecutivo a tres digitos.
+     YY     - Year. Dos posiciones para el año.
 
 3.er Columna - Usuario
-El usuario es seleccionado desde la ventana de Eventos. El cual cuenta con tres opciones:
      -Coordinaror
      -Analista
      -Invitado
 
-4.a Columna - Evento
-Breve visualización del evento
+4.a Columna - Evento, breve visualización del evento
 
-Si el usuario desea visualizar más eventos solo tiene que localizarse dentro de la tabla y "scrollear" hacia abajo. Los eventos en la tabla principal cubren el año en curso y el anterior.
+Si el usuario desea visualizar más eventos solo tiene que localizarse dentro de la tabla y "scrollear" hacia abajo. 
+Los eventos en la tabla principal cubren el año en curso y el anterior.
 Todos los eventos se encuentran en la base de datos de sistemas.
 """
 
@@ -135,6 +128,36 @@ YY.MM.DD(ID)
 También se puede buscar por el formato completo de identificador. El cual es:
 YYYYMMDDII
 Si el usuario desease visualizar todos los eventos registrados en la bitácora solo tiene que dar click en el botón de Buscar con el campo de búsqueda en blanco.
+"""
+Event_info= """Para insertar un evento es necesario cumplir con algunos campos.
+- Usuario. La persona que introducirá el evento.
+- Evento. Se refiere a la información que sea pertinente depositar en la base de datos de sistemas para futuras consultas.
+Presionar el boton "Ingresar" en este punto es posible y puede referirse a eventos que no pertenezcan a ningun satelite.
+- Satelite. Nos referimos al satelite qué el evento se refiere. 
+- Marcadores. Está sección que nos ayuda a identificar a qué tipo de evento se refiere. Los cuales son:
+     - Diario. Eventos que se presentan en las revisiones diarias.
+     - Semanal. Eventos que se presentan durante el 
+       mantenimiento semanal.
+     - Semestral. Eventos que se presentan durante el 
+       mantenimiento semestral.
+     - Incidencia. Se refiere a los problemas que surgen 
+       inesperadamente. Es necesario proporcionar un número 
+       de ticket (#-TICKET)
+     - Correctivo. Solucion que se ejecutó con cambios de 
+       hardware.
+     - Atención a incidencia. Solución que se llevó a cabo 
+       mediante software.
+- #-TICKET. El número de ticket se tiene que proporcionar 
+  manualmente por el usuario sí en la sección "Marcadores", 
+  "Incidencia" es marcada. 
+El formato para asignar un ticket es el siguiente:
+     ### - Número consecutivo a tres digitos.
+             - Guion medio. Se utiliza para delimitar el número 
+               consecutivo y el año.
+     YY    - Year. Dos posiciones para el año
+El proposito de asignar un número de ticket es para que en el área de sistemas se tenga un seguimiento del evento. 
+
+Nota: Es posible redactar un evento describiendo el problema y la solución, solo se tiene que indicar qué la solución al problema fue "Correctivo" o #Atención a incidencia"
 """
 
 def generator_dateID(): 
@@ -248,10 +271,14 @@ def three_com():
 
 
 ##################################### Tree View Info ########################################################
-def TV_info ():
+def TV_info():
         messagebox.showinfo("Visualización de eventos en la tabla principal", View_TV)
 
 
 ##################################### Search ########################################################
-def Search_info ():
+def Search_info():
         messagebox.showinfo("Busquedas", Search)
+
+################# Insert an event ###################################################################
+def insertEvent_info():
+        messagebox.showinfo("Insertar un evento", Event_info)
