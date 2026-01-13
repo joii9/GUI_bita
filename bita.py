@@ -254,17 +254,17 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
 
-        columns = ("YY.MM.DD(ID)", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
+        columns = ("IDENTIFICADOR", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
         self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
 
-        self.my_tree.column("YY.MM.DD(ID)", anchor= CENTER, width=100)
-        self.my_tree.column("TICKET", anchor= CENTER, width=100)
-        self.my_tree.column("USERID", anchor= CENTER, width=100) 
-        self.my_tree.column("EVENT", anchor= W, width= 600)
+        self.my_tree.column("IDENTIFICADOR", anchor= CENTER, width=95)
+        self.my_tree.column("TICKET", anchor= CENTER, width=50)
+        self.my_tree.column("USERID", anchor= CENTER, width=70) 
+        self.my_tree.column("EVENT", anchor= W, width= 700)
         #self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
         #self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
 
-        self.my_tree.heading("YY.MM.DD(ID)", text="YY.MM.DD(ID)", anchor=CENTER)
+        self.my_tree.heading("IDENTIFICADOR", text="IDENTIFICADOR", anchor=CENTER)
         self.my_tree.heading("TICKET", text="TICKET", anchor=CENTER)
         self.my_tree.heading("USERID", text="USUARIO", anchor=CENTER)
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
