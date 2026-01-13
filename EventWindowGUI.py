@@ -7,6 +7,7 @@ from tkinter import ttk
 from datetime import date
 
 from miscellaneous import *
+from aboutWindowGUI import AboutWindow
 #from date import generator_dateID
 
 
@@ -15,11 +16,11 @@ class EventWindow():
     def __init__(self,main_window): #Creamos un constructor que recibe objeto, ya que estamos declarando el main_window en toplevel
         self.win=main_window.win #A la variable self.win recibe del objeto solo win
         self.main_window=main_window #self.obj recibe el objeto entero, en esta linea recibe el objeto main_window con todas las funciones miembro
-        #self.event_window=Toplevel(self.win)
         self.event_window=tkinter.Tk()
         self.event_window.title("Eventos")
         self.event_window.configure(bg="#D49FFF")
         self.event_window.geometry("675x500")
+        self.menuEvent_window()
         self.logging_section()
         self.event_section()
         self.checkbox_section()
@@ -27,6 +28,23 @@ class EventWindow():
         #self.solution_section()
         #self.win.deiconify() #witthdraw()
         #self.win.destroy()
+    
+    def menuEvent_window(self):
+
+        menuEventWindow= Menu(self.event_window)
+        self.event_window.config(menu=menuEventWindow)
+
+        ##Create a menu item
+        event_menu = Menu(menuEventWindow, tearoff=0)
+        menuEventWindow.add_cascade(label="Archivo", menu=event_menu)
+        event_menu.add_command(label= "Salir...", command=self.event_window.destroy)
+        
+        #Create an about option
+        help_menu= Menu(menuEventWindow, tearoff=0)
+        menuEventWindow.add_cascade(label="Ayuda", menu=help_menu)
+        help_menu.add_command(label="¿Como introducir un evento?", command=insertEvent_info) #About window
+        help_menu.add_separator()
+        help_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
     
     def logging_section (self):
         self.logging_frame= tk.Frame(self.event_window, bg="#D49FFF", padx=10, pady=10)
@@ -107,7 +125,7 @@ class EventWindow():
         checkbutton_attention_inc = tk.Checkbutton(self.event_window.checkbox_frame, variable=self.attention_inc, bg="#D49FFF") 
         checkbutton_attention_inc.grid(column=3, row=6)
         
-        label_ticket= tk.Label(self.event_window.checkbox_frame, text="#-TICKET", fg="#4D4D4D", bg="#D49FFF")
+        label_ticket= tk.Label(self.event_window.checkbox_frame, text="###-TICKET", fg="#4D4D4D", bg="#D49FFF")
         label_ticket.grid(column=1, columnspan=2, row=5, pady=10)
         self.ticket=tk.Entry(self.event_window.checkbox_frame)
         self.ticket.grid(column=1, columnspan=2, row=6)
