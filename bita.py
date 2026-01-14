@@ -22,6 +22,11 @@ class MainWindow():
         self.win.title("BITACORA DE SISTEMAS")
         self.win.configure(bg="#D49FFF")
         self.win.geometry("1000x300")
+        self.bar_menu()
+        self.create_searchBar()
+        self.create_title("Eventos")
+        self.create_table()
+        self.show()
         
     
     def bar_menu(self):
@@ -63,8 +68,11 @@ class MainWindow():
         my_menu.add_cascade(label="Ayuda", menu=about_menu, command=self.win.quit)
         about_menu.add_command(label="Visualización de eventos", command=TV_info) #About window
         about_menu.add_command(label="Busquedas", command=Search_info) #About window
+        about_menu.add_command(label= "Añadir evento", command= addingEvent_info)
+        about_menu.add_command(label= "¿Como abrir una ventana de seguimiento?", command=openning_trace_Window_info)
         about_menu.add_separator()
         about_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
+        
         
 
 
@@ -312,7 +320,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         
         self.my_tree.bind("<Double-1>", self.click) #acuerdate que con () la funcion se ejecuta a la de a webo
         
-        self.add_event=tk.Button(text="Añadir Evento", command= lambda:EventWindow(self)) #Antes self.win pero de esta forma solo pasaba la ventana a EventWindow. La forma correcta es solo self para pasar el objeto completo.
+        self.add_event=tk.Button(text="Añadir evento", command= lambda:EventWindow(self)) #Antes self.win pero de esta forma solo pasaba la ventana a EventWindow. La forma correcta es solo self para pasar el objeto completo.
         self.add_event.pack()
 
     def click(self, e):
@@ -325,6 +333,5 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         #variable=traceWindow(arg1,arg2)#arg1=selection, arg2=MainWindow    
     
     def show(self):
-
         self.win.mainloop()
     
