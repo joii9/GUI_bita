@@ -110,9 +110,9 @@ Reiniciando el identificador en un día diferente.
      YY     - Year. Dos posiciones para el año.
 
 3.er Columna - Usuario
-     -Coordinaror
-     -Analista
-     -Invitado
+     - Coordinaror
+     - Analista
+     - Invitado
 
 4.a Columna - Evento, breve visualización del evento
 
@@ -158,6 +158,23 @@ El formato para asignar un ticket es el siguiente:
 El proposito de asignar un número de ticket es para que en el área de sistemas se tenga un seguimiento del evento. 
 
 Nota: Es posible redactar un evento describiendo el problema y la solución, solo se tiene que indicar qué la solución al problema fue "Correctivo" o #Atención a incidencia"
+"""
+adding_info="""Agregar un evento.
+Al dar click en el boton "Añadir evento" se abrirá una nueva ventana en la cual deberás proporcionar la información para añadir información en la base de datos"""
+
+openning_trace_Window="""Para abrir una ventana de seguimiento es necesario localizar en la tabla principal el evento a cual se le quiere añadir nueva información.
+Una vez localizado el evento se le da doble click y esto abrirá una nueva ventana en la cual se podrá visualizar completa la descripción del problema, añadir más información
+o marcar como solucionado con las casillas "Correctivo" o "Atención a indicencia".
+"""
+trace_Window_Info="""- La primer linea corresponde al identificador del evento que 
+  estamos abriendo.
+- La segunda linea es el número de ticket.
+- La tercer linea corresponde al usuario que abrio el evento.
+- Y la cuarta, es la descripción del evento regristrado.
+
+Como en la ventana de Eventos es necesario seleccionar un Usuario para poder dar una actualización al evento.
+En la sección Actualización es necesario proporcionar nueva información para el evento.
+No es necesario marcar como "Correctivo" o "Atención a indicencia" si el evento aun no se ha resuelto.
 """
 
 def generator_dateID(): 
@@ -282,3 +299,15 @@ def Search_info():
 ################# Insert an event ###################################################################
 def insertEvent_info():
         messagebox.showinfo("Insertar un evento", Event_info)
+
+########################### Adding an event ########################################################
+def addingEvent_info():
+        messagebox.showinfo("Añadir evento", adding_info)
+
+#################################### Opening trance_Window #########################################
+def openning_trace_Window_info():
+        messagebox.showinfo("Abrir una ventana de seguimiento", openning_trace_Window)
+
+##################################### Follow up window info #################################################
+def followUp_Window_Info():
+        messagebox.showinfo("Seguimiento a un evento", trace_Window_Info)
