@@ -8,7 +8,6 @@ from datetime import date
 
 from miscellaneous import *
 from aboutWindowGUI import AboutWindow
-#from date import generator_dateID
 
 
 class EventWindow():
@@ -50,7 +49,7 @@ class EventWindow():
         self.logging_frame= tk.Frame(self.event_window, bg="#D49FFF", padx=10, pady=10)
         self.logging_frame.pack(side="top", fill="both") #expand=True,
 
-        label= tk.Label(self.logging_frame, text="DATE.(ID):", font=("Helvetica", 14), bg="#D49FFF", fg="#4D4D4D")
+        label= tk.Label(self.logging_frame, text="Fecha.(ID):", font=("Helvetica", 14), bg="#D49FFF", fg="#4D4D4D")
         label.grid(row= 0, column= 0)
 
         dateid_view=generator_dateID()
@@ -86,7 +85,7 @@ class EventWindow():
         checkbutton_mx3=tk.Radiobutton(self.event_window.checkbox_frame, variable=self.MX, value=3, indicatoron= 0, text="MX3", bg="#408080") #self.mx3 bg="#D49FFF"
         checkbutton_mx3.grid(column=3, row=0)
 
-        label_marks= tk.Label(self.event_window.checkbox_frame, text="    MARCADORES", font=("Helvetica", 15),fg="#4D4D4D", bg="#D49FFF") #
+        label_marks= tk.Label(self.event_window.checkbox_frame, text="   Marcadores", font=("Helvetica", 15),fg="#4D4D4D", bg="#D49FFF") #
         label_marks.grid(column=1, columnspan=2, row=1, pady=5)
         
         label_daily= tk.Label(self.event_window.checkbox_frame, text="DIARIO",fg="#4D4D4D", bg="#D49FFF") #font=("Helvetica", 15)
