@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter import ttk
 
 from miscellaneous import *
+from aboutWindowGUI import AboutWindow
 
 class traceWindow():
     
@@ -20,11 +21,29 @@ class traceWindow():
         self.trace_window.configure(bg="#D49FFF")
         #self.trace_window.geometry("500x500")
         #self.trace_window.resizable()
+        self.menu_trace_Window()
         self.put_label()
         self.update_event()
         self.checkbutton_button()
         #self.trace_window.deiconify()
         #self.trace_window.mainloop()
+    
+    def menu_trace_Window(self):
+
+        menu_traceWindow= Menu(self.trace_window)
+        self.trace_window.config(menu=menu_traceWindow)
+
+        ##Create a menu item
+        trace_menu = Menu(menu_traceWindow, tearoff=0)
+        menu_traceWindow.add_cascade(label="Archivo", menu=trace_menu)
+        trace_menu.add_command(label= "Salir...", command=self.trace_window.destroy)
+        
+        #Create an about option
+        help_menu= Menu(menu_traceWindow, tearoff=0)
+        menu_traceWindow.add_cascade(label="Ayuda", menu=help_menu)
+        help_menu.add_command(label="Dar seguimiento a un evento", command=followUp_Window_Info) #About window
+        help_menu.add_separator()
+        help_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
     
     def put_label(self):#,selection)
         
@@ -32,9 +51,9 @@ class traceWindow():
         
         print(self.selection[0])
 
-        dateid_view=generator_dateID()
+        #dateid_view=generator_dateID()
 
-        label= tk.Label(self.trace_window, text=dateid_view[2:4]+"."+dateid_view[4:6]+"."+dateid_view[6:8]+"("+dateid_view[8:10]+")", font=("Helvetica", 12), fg="#4D4D4D")
+        label= tk.Label(self.trace_window, text=self.selection[0], font=("Helvetica", 12), fg="#4D4D4D") # dateid_view[2:4]+"."+dateid_view[4:6]+"."+dateid_view[6:8]+"("+dateid_view[8:10]+")" (FECHA DE LA ACTUALIZACIÓN)
         print(self.selection[1])
         label.configure(bg="#D49FFF")
         label.pack()
