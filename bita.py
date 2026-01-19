@@ -72,10 +72,7 @@ class MainWindow():
         about_menu.add_command(label= "¿Como abrir una ventana de seguimiento?", command=openning_trace_Window_info)
         about_menu.add_separator()
         about_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
-        
-        
-
-
+    
     def create_searchBar(self):
         
         frame=LabelFrame(self.win, text="Búsqueda")
@@ -116,17 +113,6 @@ class MainWindow():
                 buscar= "20"+"".join(buscar)
                 print(buscar)
                 
-
-        #if re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar):
-        #    buscar=re.findall(r"(\d{2})\.(\d{2})\.(\d{2})\((\d{2})\)", buscar)
-        #    print(buscar)
-        #    buscar="".join(buscar[0])
-        #    buscar="20"+buscar
-        #    #print("buscar " +buscar)
-        #
-        ######## Aquí ira otra opción de buscar #################################
-
-
         try:
             data=int(buscar)
             data_plus= data+1
@@ -262,12 +248,25 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
 
+
+        #Creating a treview FRAME
+        tree_frame= Frame(self.win)
+        tree_frame.pack()
+
+        # Treeview Scrollbar
+        self.tree_scroll = ttk.Scrollbar(tree_frame, orient="vertical", command= lambda: self.my_tree.yview)
+        self.tree_scroll.pack(side=RIGHT, fill=Y)
+        
+        
+        #Creating a treeView
         columns = ("IDENTIFICADOR", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
-        self.my_tree = ttk.Treeview(self.win, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
+        self.my_tree = ttk.Treeview(tree_frame, yscrollcommand=self.tree_scroll.set, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
+        self.my_tree.pack()
+        self.tree_scroll.config(command= self.my_tree.yview)
 
         self.my_tree.column("IDENTIFICADOR", anchor= CENTER, width=95)
         self.my_tree.column("TICKET", anchor= CENTER, width=50)
-        self.my_tree.column("USERID", anchor= CENTER, width=70) 
+        self.my_tree.column("USERID", anchor= CENTER, width=80) 
         self.my_tree.column("EVENT", anchor= W, width= 700)
         #self.my_tree.column("ATINCMX2", anchor= CENTER, width= 100)
         #self.my_tree.column("ATINCMX3", anchor= CENTER, width= 100)
@@ -278,7 +277,9 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         self.my_tree.heading("EVENT", text="EVENTO", anchor=W)
         #self.my_tree.heading("ATINCMX2", text="ATENCION MX2", anchor=CENTER)     
         #self.my_tree.heading("ATINCMX3", text="ATENCION MX3", anchor=CENTER)     
-        self.my_tree.pack()
+        
+        #self.my_tree.pack()
+        #self.tree_scroll.pack(side='right', fill='y')
 
         #Create striped row tags
         self.my_tree.tag_configure('None', background="White")
@@ -317,7 +318,7 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
             else:
                 self.my_tree.insert("", 0, values = row, tag='Red')
         connection.close()
-        
+
         self.my_tree.bind("<Double-1>", self.click) #acuerdate que con () la funcion se ejecuta a la de a webo
         
         self.add_event=tk.Button(text="Añadir evento", command= lambda:EventWindow(self)) #Antes self.win pero de esta forma solo pasaba la ventana a EventWindow. La forma correcta es solo self para pasar el objeto completo.
