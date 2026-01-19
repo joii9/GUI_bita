@@ -17,7 +17,7 @@ ind= re.findall("[A-Z].*sql", str_file)[0]
 
 text_about= """
 BITÁCORA DE SISTEMAS 
-Versión 1.12.0
+Versión 1.13.0
 2024
 
 Sistema Satelital Mexicano
@@ -98,7 +98,7 @@ View_TV= """VISUALIZACIÓN
 En la tabla principal se puede observar los cinco eventos más recientes.
 
 1.er Columna - Identificador, es la fecha en formato YY.MM.DD(ID)
-     Y     - Year
+     Y      - Year
      M    - Month
      D    - Day
      (ID) - Identifier per day
@@ -115,8 +115,7 @@ Reiniciando el identificador en un día diferente.
      - Invitado
 
 4.a Columna - Evento, breve visualización del evento
-
-Si el usuario desea visualizar más eventos solo tiene que localizarse dentro de la tabla y "scrollear" hacia abajo. 
+ 
 Los eventos en la tabla principal cubren el año en curso y el anterior.
 Todos los eventos se encuentran en la base de datos de sistemas.
 """
