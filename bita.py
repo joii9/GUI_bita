@@ -247,20 +247,22 @@ WHERE EVENTS.DATEID > """+inicio+" AND EVENTS.DATEID < "+fin+";"""
         if hasattr(self, 'my_tree'):
             self.my_tree.destroy() #Destruye el treeview si existe
             self.add_event.destroy() #Destruye el boton add_event si existe
+            self.tree_scroll.destroy()#Destruye la scroll bar
+            self.tree_frame.destroy()#Destruye el frame
 
 
         #Creating a treview FRAME
-        tree_frame= Frame(self.win)
-        tree_frame.pack()
+        self.tree_frame= Frame(self.win)
+        self.tree_frame.pack()
 
         # Treeview Scrollbar
-        self.tree_scroll = ttk.Scrollbar(tree_frame, orient="vertical", command= lambda: self.my_tree.yview)
+        self.tree_scroll = ttk.Scrollbar(self.tree_frame, orient="vertical", command= lambda: self.my_tree.yview)
         self.tree_scroll.pack(side=RIGHT, fill=Y)
         
         
         #Creating a treeView
         columns = ("IDENTIFICADOR", "TICKET", "USERID", "EVENT") #, "ATINCMX2", "ATINCMX3"
-        self.my_tree = ttk.Treeview(tree_frame, yscrollcommand=self.tree_scroll.set, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
+        self.my_tree = ttk.Treeview(self.tree_frame, yscrollcommand=self.tree_scroll.set, column = columns, show = 'headings', height = 5) #height = Significa el numero de renglones que tiene el treeview
         self.my_tree.pack()
         self.tree_scroll.config(command= self.my_tree.yview)
 
