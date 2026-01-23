@@ -41,7 +41,7 @@ class traceWindow():
         #Create an about option
         help_menu= Menu(menu_traceWindow, tearoff=0)
         menu_traceWindow.add_cascade(label="Ayuda", menu=help_menu)
-        help_menu.add_command(label="Dar seguimiento a un evento", command=followUp_Window_Info) #About window
+        help_menu.add_command(label="Dar seguimiento a un evento", command=lambda:followUp_Window_Info(self.trace_window)) #About window lambda: insertEvent_info(self.event_window)
         help_menu.add_separator()
         help_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
     

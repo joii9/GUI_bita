@@ -12,9 +12,8 @@ from aboutWindowGUI import AboutWindow
 
 class EventWindow():
     
-    def __init__(self,main_window): #Creamos un constructor que recibe objeto, ya que estamos declarando el main_window en toplevel
-        self.win=main_window.win #A la variable self.win recibe del objeto solo win
-        self.main_window=main_window #self.obj recibe el objeto entero, en esta linea recibe el objeto main_window con todas las funciones miembro
+    def __init__(self, obj): #Creamos un constructor que recibe objeto, en este caso el objeto que recibe es main_window
+        self.win=obj #A la variable self.win recibe del objeto solo win
         self.event_window=tkinter.Tk()
         self.event_window.title("Eventos")
         self.event_window.configure(bg="#D49FFF")
@@ -41,7 +40,7 @@ class EventWindow():
         #Create an about option
         help_menu= Menu(menuEventWindow, tearoff=0)
         menuEventWindow.add_cascade(label="Ayuda", menu=help_menu)
-        help_menu.add_command(label="¿Como introducir un evento?", command=insertEvent_info) #About window
+        help_menu.add_command(label="¿Como introducir un evento?", command=lambda: insertEvent_info(self.event_window)) #About window
         help_menu.add_separator()
         help_menu.add_command(label="Acerca de...", command=AboutWindow) #About window
     
@@ -216,9 +215,10 @@ class EventWindow():
                 cursor = connection.cursor()
                 cursor.execute('insert into EVENTS(DATEID, USERID, EVENT) values ('+generator_dateID()+',"'+self.input_user+'","'+self.input_event.replace('"',"''")+'")')#Borre el atributo TICKET en esta linea, ya que no es necesario
                 connection.commit()
+            self.win.create_table() #Ejecutamos la función create_table para el self.win que en el se encuentra el objeto main_window, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
             self.event_window.destroy() #Aquí destruimos event_window
             #self.win.deiconify() #Aparecemos al padre, self.win
-            self.main_window.create_table() #Ejecutamos la función create_table para el objeto, de esta manera actualizamos el treeview con los datos obtenidos de esta funcion get_input
+            
         
         
     

@@ -17,7 +17,7 @@ ind= re.findall("[A-Z].*sql", str_file)[0]
 
 text_about= """
 BITÁCORA DE SISTEMAS 
-Versión 1.13.0
+Versión 1.14.0
 2024
 
 Sistema Satelital Mexicano
@@ -296,8 +296,8 @@ def Search_info():
         messagebox.showinfo("Busquedas", Search)
 
 ################# Insert an event ###################################################################
-def insertEvent_info():
-        messagebox.showinfo("Insertar un evento", Event_info)
+def insertEvent_info(parent_window):
+        messagebox.showinfo("Insertar un evento", Event_info, parent=parent_window)
 
 ########################### Adding an event ########################################################
 def addingEvent_info():
@@ -308,5 +308,5 @@ def openning_trace_Window_info():
         messagebox.showinfo("Abrir una ventana de seguimiento", openning_trace_Window)
 
 ##################################### Follow up window info #################################################
-def followUp_Window_Info():
-        messagebox.showinfo("Seguimiento a un evento", trace_Window_Info)
+def followUp_Window_Info(parent_window):
+        messagebox.showinfo("Seguimiento a un evento", trace_Window_Info, parent=parent_window)
